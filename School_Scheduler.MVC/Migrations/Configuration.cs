@@ -6,8 +6,8 @@ namespace School_Scheduler.MVC.Migrations
     using System.Data.Entity.Migrations;
     using System.Diagnostics;
     using System.Linq;
-    using School_Scheduler.Models.Domain;
     using School_Scheduler.MVC.Models;
+    using School_Scheduler.MVC.Models.Domain;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -30,6 +30,12 @@ namespace School_Scheduler.MVC.Migrations
                 // System.Diagnostics.Debugger.Launch();
             }
 
+            Student student1 = new Student { FirstName = "Student 1 FirstName", LastName = "Student 1 LastName" };
+            Student student2 = new Student { FirstName = "Student 2 FirstName", LastName = "Student 2 LastName" };
+            Student student3 = new Student { FirstName = "Student 3 FirstName", LastName = "Student 3 LastName" };
+            Student student4 = new Student { FirstName = "Student 4 FirstName", LastName = "Student 4 LastName" };
+            Student student5 = new Student { FirstName = "Student 5 FirstName", LastName = "Student 5 LastName" };
+
             Instructor everett = new Instructor { Name = "Everett" };
             Instructor alvi = new Instructor { Name = "Alvi" };
 
@@ -40,7 +46,8 @@ namespace School_Scheduler.MVC.Migrations
             SchoolProgram softwareDevelopment = new SchoolProgram
             {
                 Name = "Software Development",
-                Instructors = new List<Instructor> { everett, alvi }
+                Instructors = new List<Instructor> { everett, alvi },
+                EnrolledStudents = new List<Student> { student1, student2, student3, student4, student5 }
             };
 
             DateTime startDate = DateTime.Now.AddDays(5);
@@ -48,12 +55,13 @@ namespace School_Scheduler.MVC.Migrations
             {
                 Name = "React Front to Back",
                 SchoolProgram = softwareDevelopment,
-                //ClassStartTime = new TimeSpan(8, 45, 0),
-                //ClassEndTime = new TimeSpan(15, 15, 0),
+                ClassStartTime = new TimeSpan(8, 45, 0),
+                ClassEndTime = new TimeSpan(15, 15, 0),
                 StartDate = startDate,
                 EndDate = startDate.AddYears(1),
                 Instructor = everett,
                 Room = room200,
+                EnrolledStudents = new List<Student> { student1, student2, student3, student4, student5 }
             };
 
             db.ClassRooms.AddOrUpdate(cr => cr.RoomNumber, room200, room126, room104);

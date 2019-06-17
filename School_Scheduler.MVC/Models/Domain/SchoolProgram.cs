@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 
-namespace School_Scheduler.Models.Domain
+namespace School_Scheduler.MVC.Models.Domain
 {
     /// <summary>
     /// Represents a program of a school with Unique a <see cref="SchoolProgram"/>
@@ -30,6 +30,11 @@ namespace School_Scheduler.Models.Domain
         public virtual List<Course> Courses { get; set; }
 
         /// <summary>
+        /// Navigational property to the <see cref="SchoolProgram"/>'s current enrolled <see cref="Student"/>s
+        /// </summary>
+        public virtual List<Student> EnrolledStudents { get; set; }
+
+        /// <summary>
         /// Creates a new <see cref="SchoolProgram"/> with a empty instructors and courses List and a unique <see cref="Guid"/>
         /// </summary>
         public SchoolProgram()
@@ -37,11 +42,14 @@ namespace School_Scheduler.Models.Domain
             Id = Guid.NewGuid();
             Instructors = new List<Instructor>();
             Courses = new List<Course>();
+            EnrolledStudents = new List<Student>();
         }
+
+        public override string ToString() => $"SchoolProgram: {Name}";
     }
-    public class SchoolProgramsConfig : EntityTypeConfiguration<SchoolProgram>
+    public class SchoolProgramConfig : EntityTypeConfiguration<SchoolProgram>
     {
-        public SchoolProgramsConfig()
+        public SchoolProgramConfig()
         {
             HasKey(sp => sp.Id)
                 .Property(sp => sp.Id)
@@ -54,6 +62,10 @@ namespace School_Scheduler.Models.Domain
 
             HasMany(sp => sp.Instructors)
                 .WithMany(i => i.SchoolPrograms);
+
+            HasMany(sp => sp.EnrolledStudents)
+                .WithRequired(s => s.Program)
+                .HasForeignKey(s => s.ProgramId);
         }
     }
 }

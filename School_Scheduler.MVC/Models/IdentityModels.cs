@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using School_Scheduler.Models.Domain;
+using School_Scheduler.MVC.Models.Domain;
 
 namespace School_Scheduler.MVC.Models
 {
@@ -13,7 +13,7 @@ namespace School_Scheduler.MVC.Models
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            ClaimsIdentity userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
         }
@@ -25,15 +25,26 @@ namespace School_Scheduler.MVC.Models
         public DbSet<SchoolProgram> SchoolPrograms { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<ClassRoom> ClassRooms { get; set; }
+        public DbSet<Student> Students { get; set; }
 
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static ApplicationDbContext Create() => new ApplicationDbContext();
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            return new ApplicationDbContext();
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+
+            modelBuilder.Configurations.Add(new InstructorConfig());
+            modelBuilder.Configurations.Add(new SchoolProgramConfig());
+            modelBuilder.Configurations.Add(new CourseConfig());
+            modelBuilder.Configurations.Add(new ClassRoomConfig());
+            modelBuilder.Configurations.Add(new StudentConfig());
         }
     }
 }
