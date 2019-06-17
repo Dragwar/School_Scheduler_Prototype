@@ -5,9 +5,8 @@ namespace School_Scheduler.MVC.Models.ViewModels
 {
     public class StudentViewModel
     {
-        public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
         public int StudentNumber { get; set; }
         public CourseViewModel CurrentCourse { get; set; }
         public Guid CurrentCourseId { get; set; }
@@ -22,8 +21,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
             }
 
             Id = student.Id;
-            FirstName = student.FirstName;
-            LastName = student.LastName;
+            Name = student.Name;
             StudentNumber = student.StudentNumber;
             CurrentCourse = new CourseViewModel(student.CurrentCourse);
             CurrentCourseId = student.CurrentCourseId;
@@ -34,6 +32,6 @@ namespace School_Scheduler.MVC.Models.ViewModels
         {
         }
 
-        public override string ToString() => $"StudentViewModel: {FirstName} {LastName}, {StudentNumber}";
+        public override string ToString() => $"StudentViewModel: {Name}, {StudentNumber}";
     }
 }
