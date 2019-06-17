@@ -1,12 +1,12 @@
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace School_Scheduler.Models.Domain
 {
     public class SchoolProgram
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
 
@@ -14,6 +14,7 @@ namespace School_Scheduler.Models.Domain
         public virtual List<Course> Courses { get; set; }
         public SchoolProgram()
         {
+            Id = Guid.NewGuid();
             Instructors = new List<Instructor>();
             Courses = new List<Course>();
         }
@@ -24,7 +25,6 @@ namespace School_Scheduler.Models.Domain
         {
             HasKey(sp => sp.Id)
                 .Property(sp => sp.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
                 .IsRequired();
 
 

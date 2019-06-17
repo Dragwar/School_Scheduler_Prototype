@@ -1,12 +1,12 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace School_Scheduler.Models.Domain
 {
     public class Course
     {
-        public int Id { get; set; }
+        // ok
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -15,13 +15,15 @@ namespace School_Scheduler.Models.Domain
 
 
         public virtual ClassRoom Room { get; set; }
-        public int RoomId { get; set; }
+        public Guid RoomId { get; set; }
 
         public virtual SchoolProgram SchoolProgram { get; set; }
-        public int SchoolProgramId { get; set; }
+        public Guid SchoolProgramId { get; set; }
 
         public virtual Instructor Instructor { get; set; }
-        public int InstructorId { get; set; }
+        public Guid InstructorId { get; set; }
+
+        public Course() => Id = Guid.NewGuid();
     }
     public class CourseConfig : EntityTypeConfiguration<Course>
     {
@@ -29,7 +31,6 @@ namespace School_Scheduler.Models.Domain
         {
             HasKey(c => c.Id)
                 .Property(c => c.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
                 .IsRequired();
 
             Property(c => c.ClassStartTime).IsRequired();
