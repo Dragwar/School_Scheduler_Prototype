@@ -7,18 +7,8 @@ namespace School_Scheduler.MVC.Models.Domain
     /// <summary>
     /// Represents a person who teaches <see cref="Course"/>s and belongs to <see cref="SchoolProgram"/>s
     /// </summary>
-    public class Instructor
+    public class Instructor : ApplicationUser
     {
-        /// <summary>
-        /// Represents the <see cref="Guid"/> <see cref="Id"/> of <see cref="Instructor"/> (Don't show to users)
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Represents the <see cref="string"/> Name of a <see cref="Instructor"/>
-        /// </summary>
-        public string Name { get; set; }
-
         /// <summary>
         /// Represents a unique <see cref="int"/> number (auto-generated)
         /// </summary>
@@ -30,18 +20,21 @@ namespace School_Scheduler.MVC.Models.Domain
         public virtual List<Course> Courses { get; set; }
 
         /// <summary>
-        /// Navigational property to the <see cref="Instructor"/>'s <see cref="SchoolPrograms"/>
+        /// Navigational property to the <see cref="Instructor"/>'s <see cref="SchoolProgram"/>
         /// </summary>        
-        public virtual List<SchoolProgram> SchoolPrograms { get; set; }
+        public virtual SchoolProgram SchoolProgram { get; set; }
 
         /// <summary>
-        /// Creates a new <see cref="Instructor"/> with a empty courses and school programs List and a unique <see cref="Guid"/> <see cref="Id"/>
+        /// Foreign Key for the <see cref="Domain.SchoolProgram"/> navigational property
+        /// </summary> 
+        public Guid SchoolProgramId { get; set; }
+
+        /// <summary>
+        /// Creates a new <see cref="Instructor"/> with a empty courses and a unique <see cref="Guid"/> <see cref="Id"/>
         /// </summary>
         public Instructor()
-        {
-            Id = Guid.NewGuid();
+        {            
             Courses = new List<Course>();
-            SchoolPrograms = new List<SchoolProgram>();
         }
 
         public override string ToString() => $"Instructor: {Name}, {InstructorNumber}";
@@ -51,10 +44,6 @@ namespace School_Scheduler.MVC.Models.Domain
         public const int MaxNameLength = 250;
         public InstructorConfig()
         {
-            HasKey(i => i.Id)
-                .Property(i => i.Id)
-                .IsRequired();
-
             Property(i => i.InstructorNumber)
                 .IsRequired();
 
@@ -67,8 +56,9 @@ namespace School_Scheduler.MVC.Models.Domain
                 .WithRequired(c => c.Instructor)
                 .HasForeignKey(c => c.InstructorId);
 
-            HasMany(i => i.SchoolPrograms)
-                .WithMany(sp => sp.Instructors);
+            HasRequired(i => i.SchoolProgram)
+                .WithMany(sp => sp.Instructors)
+                .HasForeignKey(i => i.SchoolProgramId);
         }
     }
 }

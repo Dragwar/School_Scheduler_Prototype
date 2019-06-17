@@ -7,7 +7,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
 {
     public class InstructorViewModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public int InstructorNumber { get; set; }
         public List<CourseViewModel> Courses { get; set; }

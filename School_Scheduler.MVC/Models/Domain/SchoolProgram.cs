@@ -61,7 +61,8 @@ namespace School_Scheduler.MVC.Models.Domain
                 .HasForeignKey(c => c.SchoolProgramId);
 
             HasMany(sp => sp.Instructors)
-                .WithMany(i => i.SchoolPrograms);
+                .WithRequired(i => i.SchoolProgram)
+                .HasForeignKey(i => i.SchoolProgramId);
 
             HasMany(sp => sp.EnrolledStudents)
                 .WithRequired(s => s.Program)

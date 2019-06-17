@@ -6,23 +6,8 @@ namespace School_Scheduler.MVC.Models.Domain
     /// <summary>
     /// Represents a person who participates in <see cref="Course"/>s and <see cref="SchoolProgram"/>s
     /// </summary>
-    public class Student
+    public class Student : ApplicationUser
     {
-        /// <summary>
-        /// Represents the <see cref="Guid"/> <see cref="Id"/> of <see cref="Student"/> (Don't show to users)
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Represents the <see cref="string"/> First Name of a <see cref="Student"/>
-        /// </summary>
-        public string FirstName { get; set; }
-
-        /// <summary>
-        /// Represents the <see cref="string"/> Last Name of a <see cref="Student"/>
-        /// </summary>
-        public string LastName { get; set; }
-
         /// <summary>
         /// Represents a unique <see cref="int"/> number (auto-generated)
         /// </summary>
@@ -54,30 +39,20 @@ namespace School_Scheduler.MVC.Models.Domain
         /// </summary>
         public Guid ProgramId { get; set; }
 
-        /// <summary>
-        /// Creates a new <see cref="Student"/> with a empty courses and a unique <see cref="Guid"/> <see cref="Id"/>
-        /// </summary>
-        public Student() => Id = Guid.NewGuid();
-
-        public override string ToString() => $"Student: {FirstName} {LastName}, {StudentNumber}";
+        public override string ToString() => $"Student: {Name}, {StudentNumber}";
     }
 
     public class StudentConfig : EntityTypeConfiguration<Student>
     {
-        public const int MaxFirstNameLength = 250;
-        public const int MaxLastNameLength = 250;
+        public const int MaxNameLength = 250;
         public StudentConfig()
         {
             HasKey(s => s.Id)
                 .Property(s => s.Id)
                 .IsRequired();
 
-            Property(s => s.FirstName)
-                .HasMaxLength(MaxFirstNameLength)
-                .IsRequired();
-
-            Property(s => s.LastName)
-                .HasMaxLength(MaxLastNameLength)
+            Property(s => s.Name)
+                .HasMaxLength(MaxNameLength)
                 .IsRequired();
 
             Property(s => s.StudentNumber).IsRequired();

@@ -5,26 +5,34 @@
 }
 
 <style>
+
     .calenderContainer {
         display: flex;
         flex-flow: row wrap;
     }
 </style>
 
-<div>@Model.SchoolPrograms[0].Instructors[0].Name</div>
+<div>Program - @Model.SchoolProgram.Name</div>
 
 <div class="calenderContainer">
-    @for (int i = 0; i < 12; i++)
-    {
-        var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, i);
-        for (var j = 0; j < daysInMonth; j++)
-        {
-            <div class="calenderChild">
-                <p>@(j+1)</p>
-                <p></p>
-            </div>
+    @*@for (int i = 0; i < 12; i++)
+    {*@
+        @{
+                var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, Model.Today.Month);
+
+                bool dateInRange = Model.SchoolProgram.Courses.Where(c => Model.Today >= c.StartDate && Model.Today <= c.EndDate).Any();
+                for (var j = 0; j < daysInMonth; j++)
+                {
+                <div class="calenderChild">
+                    <p>@(j + 1)</p>
+                    @if (dateInRange)
+                    {
+                        Model.SchoolProgram.Courses.Where(c => Model.Today >= c.StartDate && Model.Today <= c.EndDate).FirstOrDefault()
+                    }
+                </div>
+            }
         }
-    }
+    @*}*@
     @*
         @foreach(var schoolProgram in Model.SchoolPrograms)
         {
