@@ -30,11 +30,11 @@ namespace School_Scheduler.MVC.Migrations
                 // System.Diagnostics.Debugger.Launch();
             }
 
-            Student student1 = new Student { FirstName = "Student 1 FirstName", LastName = "Student 1 LastName" };
-            Student student2 = new Student { FirstName = "Student 2 FirstName", LastName = "Student 2 LastName" };
-            Student student3 = new Student { FirstName = "Student 3 FirstName", LastName = "Student 3 LastName" };
-            Student student4 = new Student { FirstName = "Student 4 FirstName", LastName = "Student 4 LastName" };
-            Student student5 = new Student { FirstName = "Student 5 FirstName", LastName = "Student 5 LastName" };
+            Student student1 = new Student { Name = "Student Name 1" };
+            Student student2 = new Student { Name = "Student Name 2" };
+            Student student3 = new Student { Name = "Student Name 3" };
+            Student student4 = new Student { Name = "Student Name 4" };
+            Student student5 = new Student { Name = "Student Name 5" };
 
             Instructor everett = new Instructor { Name = "Everett" };
             Instructor alvi = new Instructor { Name = "Alvi" };
