@@ -11,11 +11,11 @@ namespace School_Scheduler.Models.Domain
 
 
         public virtual List<Course> Courses { get; set; }
-        public virtual List<SchoolProgram> Programs { get; set; }
+        public virtual List<SchoolProgram> SchoolPrograms { get; set; }
         public Instructor()
         {
             Courses = new List<Course>();
-            Programs = new List<SchoolProgram>();
+            SchoolPrograms = new List<SchoolProgram>();
         }
     }
     public class InstructorConfig : EntityTypeConfiguration<Instructor>
@@ -34,8 +34,8 @@ namespace School_Scheduler.Models.Domain
                 .WithRequired(c => c.Instructor)
                 .HasForeignKey(c => c.InstructorId);
 
-            HasMany(i => i.Programs)
-                .WithMany(p => p.Instructors)
+            HasMany(i => i.SchoolPrograms)
+                .WithMany(sp => sp.Instructors)
                 .Map(x => x.ToTable(nameof(Instructor) + "X" + nameof(SchoolProgram)));
         }
     }

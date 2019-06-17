@@ -17,8 +17,8 @@ namespace School_Scheduler.Models.Domain
         public virtual ClassRoom Room { get; set; }
         public int RoomId { get; set; }
 
-        public virtual SchoolProgram Program { get; set; }
-        public int ProgramId { get; set; }
+        public virtual SchoolProgram SchoolProgram { get; set; }
+        public int SchoolProgramId { get; set; }
 
         public virtual Instructor Instructor { get; set; }
         public int InstructorId { get; set; }
@@ -47,9 +47,9 @@ namespace School_Scheduler.Models.Domain
                 .WithMany(r => r.Courses)
                 .HasForeignKey(c => c.RoomId);
 
-            HasRequired(c => c.Program)
-                .WithMany(p => p.Courses)
-                .HasForeignKey(c => c.ProgramId);
+            HasRequired(c => c.SchoolProgram)
+                .WithMany(sp => sp.Courses)
+                .HasForeignKey(c => c.SchoolProgramId);
         }
     }
 }

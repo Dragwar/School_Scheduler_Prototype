@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using School_Scheduler.Models.Domain;
 
 namespace School_Scheduler.MVC.Models
 {
@@ -20,6 +21,10 @@ namespace School_Scheduler.MVC.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<SchoolProgram> SchoolPrograms { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<ClassRoom> ClassRooms { get; set; }
 
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)

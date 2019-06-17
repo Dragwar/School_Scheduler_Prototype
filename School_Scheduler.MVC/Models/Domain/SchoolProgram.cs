@@ -29,11 +29,11 @@ namespace School_Scheduler.Models.Domain
 
 
             HasMany(sp => sp.Courses)
-                .WithRequired(c => c.Program)
-                .HasForeignKey(c => c.ProgramId);
+                .WithRequired(c => c.SchoolProgram)
+                .HasForeignKey(c => c.SchoolProgramId);
 
             HasMany(sp => sp.Instructors)
-                .WithMany(i => i.Programs)
+                .WithMany(i => i.SchoolPrograms)
                 .Map(x => x.ToTable(nameof(Instructor) + "X" + nameof(SchoolProgram)));
         }
     }
