@@ -48,8 +48,8 @@ namespace School_Scheduler.MVC.Migrations
             {
                 Name = "React Front to Back",
                 SchoolProgram = softwareDevelopment,
-                ClassStartTime = TimeSpan.FromHours(8.45),
-                ClassEndTime = TimeSpan.FromHours(3.15),
+                //ClassStartTime = new TimeSpan(8, 45, 0),
+                //ClassEndTime = new TimeSpan(15, 15, 0),
                 StartDate = startDate,
                 EndDate = startDate.AddYears(1),
                 Instructor = everett,
