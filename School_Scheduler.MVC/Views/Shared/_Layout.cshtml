@@ -47,12 +47,13 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Brand -->
-            <a class="navbar-brand pt-0" href="./index.html">
+            <a class="navbar-brand pt-0" href="~/Template/index.html">
                 <img src="~/Template/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
             <!-- User -->
             <ul class="nav align-items-center d-md-none">
-                <li class="nav-item dropdown">
+                <!--User account management dropdown-->
+                @*<li class="nav-item dropdown">
                     <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="ni ni-bell-55"></i>
                     </a>
@@ -62,7 +63,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
-                </li>
+                </li>*@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
@@ -151,20 +152,24 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./examples/tables.html">
+                        <a class="nav-link" href="~/Template//examples/tables.html">
                             <i class="ni ni-bullet-list-67 text-red"></i> Tables
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./examples/login.html">
-                            <i class="ni ni-key-25 text-info"></i> Login
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./examples/register.html">
-                            <i class="ni ni-circle-08 text-pink"></i> Register
-                        </a>
-                    </li>
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login", "Account")">
+                                <i class="ni ni-key-25 text-info"></i> Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Register", "Account")">
+                                <i class="ni ni-circle-08 text-pink"></i> Register
+                            </a>
+                        </li>
+                    }
+
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">
