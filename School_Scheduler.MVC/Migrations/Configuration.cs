@@ -91,7 +91,7 @@ namespace School_Scheduler.MVC.Migrations
                 ClassStartTime = new TimeSpan(8, 45, 0),
                 ClassEndTime = new TimeSpan(15, 15, 0),
                 StartDate = startDate,
-                EndDate = startDate.AddYears(1),
+                EndDate = startDate.AddDays(5), // Ok it worked I'm starting the debugger again
                 Instructor = everett,
                 InstructorId = everett.Id,
                 ClassRoom = room200,

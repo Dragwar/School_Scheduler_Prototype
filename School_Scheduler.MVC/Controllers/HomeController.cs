@@ -4,11 +4,16 @@ using Microsoft.AspNet.Identity;
 using School_Scheduler.MVC.Models;
 using School_Scheduler.MVC.Models.Domain;
 using School_Scheduler.MVC.Models.ViewModels;
+using static School_Scheduler.MVC.Helpers.UserIdentityExtensions;
 
 namespace School_Scheduler.MVC.Controllers
 {
     public static class Helper
     {
+        //public static Discriminator GetUserDiscriminator(this )
+        //{
+
+        //}
         public static bool IsType<TAppUserType>(this ApplicationUser userToCheck)
             where TAppUserType : ApplicationUser => userToCheck is TAppUserType;
         public static TAppUserType AsType<TAppUserType>(this ApplicationUser userToCheck)
@@ -20,6 +25,7 @@ namespace School_Scheduler.MVC.Controllers
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
+            // Discriminator discriminator = User.Identity.GetDiscriminator();
             ApplicationDbContext db = new ApplicationDbContext();
 
 

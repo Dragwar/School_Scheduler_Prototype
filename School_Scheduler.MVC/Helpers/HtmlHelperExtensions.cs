@@ -15,15 +15,6 @@ namespace School_Scheduler.MVC.Helpers
     public static class HtmlHelperExtensions
     {
         /// <summary>
-        /// Delegate to select a member of a object (<typeparamref name="TModel"/>) and return the member's value (<typeparamref name="TMember"/>)
-        /// </summary>
-        /// <typeparam name="TModel">The object type that has a member</typeparam>
-        /// <typeparam name="TMember">The member's type</typeparam>
-        /// <param name="model">The object to get the member from</param>
-        /// <returns>(<typeparamref name="TMember"/>) member value</returns>
-        public delegate TMember SelectMemeber<TModel, TMember>(TModel model) where TModel : class;
-
-        /// <summary>
         /// Returns a usable HTML input[type="datetime-local"] value or JS Date string value
         /// </summary>
         /// <param name="dateTime">The DateTime to convert</param>
@@ -36,6 +27,15 @@ namespace School_Scheduler.MVC.Helpers
         /// <param name="date">The DateTime to convert (Time will be ignored)</param>
         /// <returns></returns>
         public static string ToHtmlInputDateValueString(this DateTime date) => date.ToString("yyyy-MM-dd");
+
+        /// <summary>
+        /// Delegate to select a member of a object (<typeparamref name="TModel"/>) and return the member's value (<typeparamref name="TMember"/>)
+        /// </summary>
+        /// <typeparam name="TModel">The object type that has a member</typeparam>
+        /// <typeparam name="TMember">The member's type</typeparam>
+        /// <param name="model">The object to get the member from</param>
+        /// <returns>(<typeparamref name="TMember"/>) member value</returns>
+        public delegate TMember SelectMemeber<TModel, TMember>(TModel model) where TModel : class;
 
         /// <summary>
         /// Returns a input tag (input[type="datetime-local"] tag) and you can provide a style dictionary and any classNames

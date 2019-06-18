@@ -1,11 +1,10 @@
-﻿@model School_Scheduler.MVC.Models.ViewModels.CalenderDataViewModel
+﻿@model CalenderDataViewModel
 
 @{
     ViewBag.Title = "Home Page";
 }
 
 <style>
-
     .calenderContainer {
         display: flex;
         flex-flow: row wrap;
@@ -14,24 +13,37 @@
 
 <div>Program - @Model.SchoolProgram.Name</div>
 
+<!--NEW-->
 <div class="calenderContainer">
-    @*@for (int i = 0; i < 12; i++)
-    {*@
-        @{
-                var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, Model.Today.Month);
+    @{
+        var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, Model.Today.Month);
 
-                bool dateInRange = Model.SchoolProgram.Courses.Where(c => Model.Today >= c.StartDate && Model.Today <= c.EndDate).Any();
-                for (var j = 0; j < daysInMonth; j++)
+        var coursesInRange = Model.SchoolProgram.Courses
+            .ToList()
+            .FindAll(c => Model.Today.Month == c.StartDate.Month || Model.Today.Month == c.EndDate.Month);
+
+        for (var i = 0; i < daysInMonth; i++)
+        {
+            <div class="calenderChild" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
+                <p>@(i + 1)</p>
+                @if (coursesInRange.Count > 0)
                 {
-                <div class="calenderChild">
-                    <p>@(j + 1)</p>
-                    @if (dateInRange)
+                    foreach (var course in coursesInRange)
                     {
-                        Model.SchoolProgram.Courses.Where(c => Model.Today >= c.StartDate && Model.Today <= c.EndDate).FirstOrDefault();
+                        for (var startDay = course.StartDate.Day; startDay <= course.EndDate.Day; startDay++)
+                        {
+                            if ((i + 1) == startDay)
+                            {
+                                <small style="margin-left: 15px;">i:@i k:@startDay</small>
+                                <p>This date has @(i + 1) a class</p>
+                            }
+                        }
                     }
-                </div>
-            }
+                }
+            </div>
         }
+    }
+    
     @*}*@
     @*
         @foreach(var schoolProgram in Model.SchoolPrograms)
@@ -41,3 +53,40 @@
         }
     *@
 </div>
+
+
+<!--OLD-->
+@*
+    <div class="calenderContainer">
+        @{
+            var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, Model.Today.Month);
+
+            var coursesInRange = Model.SchoolProgram.Courses.FindAll(c => Model.Today.Month == c.StartDate.Month || Model.Today.Month == c.EndDate.Month);
+            for (var i = 0; i < daysInMonth; i++)
+            {
+                <div class="calenderChild">
+                    <p>@(i + 1)</p>
+                    @if (coursesInRange.Count > 0)
+                    {
+                        foreach(var j in coursesInRange)
+                        {
+                            for(var k = j.StartDate.Day; k <= j.EndDate.Day; k++)
+                            {
+                                if ((i + 1) == k)
+                                {
+                                    <p>This date has a class</p>
+                                }
+                            }
+                        }
+                    }
+                </div>
+            }
+        }
+
+        @foreach(var schoolProgram in Model.SchoolPrograms)
+        {
+            <div>
+            </div>
+        }
+    </div>
+*@
