@@ -14,12 +14,12 @@ namespace School_Scheduler.MVC.Models.ViewModels
         public DateTime EndDate { get; set; }
         public TimeSpan ClassStartTime { get; set; }
         public TimeSpan ClassEndTime { get; set; }
-        public ClassRoomViewModel Room { get; set; }
-        public Guid RoomId { get; set; }
+        public ClassRoomViewModel ClassRoom { get; set; }
+        public Guid ClassRoomId { get; set; }
         public SchoolProgramViewModel SchoolProgram { get; set; }
         public Guid SchoolProgramId { get; set; }
         public InstructorViewModel Instructor { get; set; }
-        public Guid InstructorId { get; set; }
+        public string InstructorId { get; set; }
         public List<StudentViewModel> EnrolledStudents { get; set; }
 
 
@@ -37,8 +37,8 @@ namespace School_Scheduler.MVC.Models.ViewModels
             EndDate = course.EndDate;
             ClassStartTime = course.ClassStartTime;
             ClassEndTime = course.ClassEndTime;
-            Room = new ClassRoomViewModel(course.Room);
-            RoomId = course.RoomId;
+            ClassRoom = new ClassRoomViewModel(course.ClassRoom);
+            ClassRoomId = course.ClassRoomId;
             SchoolProgram = new SchoolProgramViewModel(course.SchoolProgram);
             SchoolProgramId = course.SchoolProgramId;
             Instructor = new InstructorViewModel(course.Instructor);

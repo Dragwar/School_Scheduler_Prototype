@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace School_Scheduler.MVC.Models.Domain
@@ -57,14 +56,14 @@ namespace School_Scheduler.MVC.Models.Domain
         public TimeSpan ClassEndTime { get; set; }
 
         /// <summary>
-        /// Navigational property to the <see cref="ClassRoom"/> that this <see cref="Course"/> takes place at/in
+        /// Navigational property to the <see cref="Domain.ClassRoom"/> that this <see cref="Course"/> takes place at/in
         /// </summary>
-        public virtual ClassRoom Room { get; set; }
+        public virtual ClassRoom ClassRoom { get; set; }
 
         /// <summary>
-        /// Foreign Key for the <see cref="Room"/> navigational property
+        /// Foreign Key for the <see cref="ClassRoom"/> navigational property
         /// </summary>
-        public Guid RoomId { get; set; }
+        public Guid ClassRoomId { get; set; }
 
         /// <summary>
         /// Navigational property to the <see cref="Domain.SchoolProgram"/> that this <see cref="Course"/> belongs to
@@ -84,7 +83,7 @@ namespace School_Scheduler.MVC.Models.Domain
         /// <summary>
         /// Foreign Key for the <see cref="Instructor"/> navigational property
         /// </summary>       
-        public Guid InstructorId { get; set; }
+        public string InstructorId { get; set; }
 
         /// <summary>
         /// Navigational property to the <see cref="Student"/>s who are enrolled in this <see cref="Course"/>
@@ -115,10 +114,6 @@ namespace School_Scheduler.MVC.Models.Domain
         public const int MaxNameLength = 250;
         public CourseConfig()
         {
-            HasKey(c => c.Id)
-                .Property(c => c.Id)
-                .IsRequired();
-
             Property(c => c.CourseNumber)
                 .IsRequired();
 
@@ -136,9 +131,9 @@ namespace School_Scheduler.MVC.Models.Domain
                 .WithMany(i => i.Courses)
                 .HasForeignKey(c => c.InstructorId);
 
-            HasRequired(c => c.Room)
+            HasRequired(c => c.ClassRoom)
                 .WithMany(r => r.Courses)
-                .HasForeignKey(c => c.RoomId);
+                .HasForeignKey(c => c.ClassRoomId);
 
             HasRequired(c => c.SchoolProgram)
                 .WithMany(sp => sp.Courses)

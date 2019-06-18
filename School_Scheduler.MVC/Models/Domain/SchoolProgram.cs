@@ -49,12 +49,17 @@ namespace School_Scheduler.MVC.Models.Domain
     }
     public class SchoolProgramConfig : EntityTypeConfiguration<SchoolProgram>
     {
+        const int MaxNameLength = 250;
+
         public SchoolProgramConfig()
         {
             HasKey(sp => sp.Id)
                 .Property(sp => sp.Id)
                 .IsRequired();
 
+            Property(sp => sp.Name)
+                .HasMaxLength(MaxNameLength)
+                .IsRequired();
 
             HasMany(sp => sp.Courses)
                 .WithRequired(c => c.SchoolProgram)
@@ -62,11 +67,13 @@ namespace School_Scheduler.MVC.Models.Domain
 
             HasMany(sp => sp.Instructors)
                 .WithRequired(i => i.SchoolProgram)
-                .HasForeignKey(i => i.SchoolProgramId);
+                .HasForeignKey(i => i.SchoolProgramId)
+                .WillCascadeOnDelete(false);
 
             HasMany(sp => sp.EnrolledStudents)
-                .WithRequired(s => s.Program)
-                .HasForeignKey(s => s.ProgramId);
+                .WithRequired(s => s.SchoolProgram)
+                .HasForeignKey(s => s.SchoolProgramId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

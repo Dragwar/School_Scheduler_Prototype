@@ -10,7 +10,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
         public string Id { get; set; }
         public string Name { get; set; }
         public int InstructorNumber { get; set; }
-        public List<CourseViewModel> Courses { get; set; }
+        public IEnumerable<CourseViewModel> Courses { get; set; }
         public SchoolProgramViewModel SchoolProgram { get; set; }
 
         public InstructorViewModel(Instructor instructor)
@@ -23,7 +23,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
             Id = instructor.Id;
             Name = instructor.Name;
             InstructorNumber = instructor.InstructorNumber;
-            Courses = instructor.Courses.Select(c => new CourseViewModel(c)).ToList();
+            Courses = instructor.Courses.Select(c => new CourseViewModel(c));
             SchoolProgram = new SchoolProgramViewModel(instructor.SchoolProgram);
         }
         public InstructorViewModel()

@@ -61,8 +61,8 @@ namespace School_Scheduler.MVC.Models.Domain
             Property(cr => cr.RoomNumber).IsRequired();
 
             HasMany(cr => cr.Courses)
-                .WithRequired(c => c.Room)
-                .HasForeignKey(c => c.RoomId);
+                .WithRequired(c => c.ClassRoom)
+                .HasForeignKey(c => c.ClassRoomId);
         }
     }
 }

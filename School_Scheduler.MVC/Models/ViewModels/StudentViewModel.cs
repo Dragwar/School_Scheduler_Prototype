@@ -10,8 +10,8 @@ namespace School_Scheduler.MVC.Models.ViewModels
         public int StudentNumber { get; set; }
         public CourseViewModel CurrentCourse { get; set; }
         public Guid CurrentCourseId { get; set; }
-        public SchoolProgramViewModel Program { get; set; }
-        public Guid ProgramId { get; set; }
+        public SchoolProgramViewModel SchoolProgram { get; set; }
+        public Guid SchoolProgramId { get; set; }
 
         public StudentViewModel(Student student)
         {
@@ -25,8 +25,8 @@ namespace School_Scheduler.MVC.Models.ViewModels
             StudentNumber = student.StudentNumber;
             CurrentCourse = new CourseViewModel(student.CurrentCourse);
             CurrentCourseId = student.CurrentCourseId;
-            Program = new SchoolProgramViewModel(student.Program);
-            ProgramId = student.ProgramId;
+            SchoolProgram = new SchoolProgramViewModel(student.SchoolProgram);
+            SchoolProgramId = student.SchoolProgramId;
         }
         public StudentViewModel()
         {

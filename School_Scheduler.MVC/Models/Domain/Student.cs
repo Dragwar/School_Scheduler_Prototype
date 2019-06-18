@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration;
 namespace School_Scheduler.MVC.Models.Domain
 {
     /// <summary>
-    /// Represents a person who participates in <see cref="Course"/>s and <see cref="SchoolProgram"/>s
+    /// Represents a person who participates in <see cref="Course"/>s and <see cref="Domain.SchoolProgram"/>s
     /// </summary>
     public class Student : ApplicationUser
     {
@@ -30,14 +30,14 @@ namespace School_Scheduler.MVC.Models.Domain
         public Guid CurrentCourseId { get; set; }
 
         /// <summary>
-        /// Navigational property to the <see cref="Student"/>'s Current <see cref="SchoolProgram"/>
+        /// Navigational property to the <see cref="Student"/>'s Current <see cref="Domain.SchoolProgram"/>
         /// </summary>
-        public virtual SchoolProgram Program { get; set; }
+        public virtual SchoolProgram SchoolProgram { get; set; }
 
         /// <summary>
-        /// Foreign Key for the <see cref="SchoolProgram"/> navigational property
+        /// Foreign Key for the <see cref="Domain.SchoolProgram"/> navigational property
         /// </summary>
-        public Guid ProgramId { get; set; }
+        public Guid SchoolProgramId { get; set; }
 
         public override string ToString() => $"Student: {Name}, {StudentNumber}";
     }
@@ -47,10 +47,6 @@ namespace School_Scheduler.MVC.Models.Domain
         public const int MaxNameLength = 250;
         public StudentConfig()
         {
-            HasKey(s => s.Id)
-                .Property(s => s.Id)
-                .IsRequired();
-
             Property(s => s.Name)
                 .HasMaxLength(MaxNameLength)
                 .IsRequired();
@@ -59,9 +55,9 @@ namespace School_Scheduler.MVC.Models.Domain
 
 
 
-            HasRequired(s => s.Program)
+            HasRequired(s => s.SchoolProgram)
                 .WithMany(sp => sp.EnrolledStudents)
-                .HasForeignKey(s => s.ProgramId);
+                .HasForeignKey(s => s.SchoolProgramId);
 
             //    HasMany(s => s.Courses)
             //        .WithMany(c => c.EnrolledStudents);
