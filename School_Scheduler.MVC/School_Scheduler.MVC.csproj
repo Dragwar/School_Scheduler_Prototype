@@ -175,6 +175,7 @@
     </Compile>
     <Compile Include="Helpers\DateTimeHelperExtensions.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\IEnumerableHelperExtensions.cs" />
     <Compile Include="Helpers\UserIdentityExtensions.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
