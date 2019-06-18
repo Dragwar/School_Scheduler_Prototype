@@ -9,6 +9,9 @@ using System.Web.Mvc;
 
 namespace School_Scheduler.MVC.Helpers
 {
+    /// <summary>
+    /// Html helper extensions
+    /// </summary>
     public static class HtmlHelperExtensions
     {
         /// <summary>
