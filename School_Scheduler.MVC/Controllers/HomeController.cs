@@ -14,10 +14,12 @@ namespace School_Scheduler.MVC.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                List<SchoolProgram> list = db.SchoolPrograms.ToList();
-                CalenderDataViewModel viewModel = new CalenderDataViewModel(list);
-                return View(viewModel);
+                //List<SchoolProgram> list = db.SchoolPrograms.ToList();
+                //CalenderDataViewModel viewModel = new CalenderDataViewModel(list);
+                //return View(viewModel);
             }
+
+            return View();
         }
 
         public ActionResult About()
