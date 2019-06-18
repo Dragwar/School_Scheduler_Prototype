@@ -222,6 +222,7 @@
     <Content Include="Template\assets\img\brand\white.png" />
     <Content Include="Template\assets\img\icons\common\github.svg" />
     <Content Include="Template\assets\img\icons\common\google.svg" />
+    <Content Include="Template\assets\img\mittlogo.jpg" />
     <Content Include="Template\assets\img\theme\angular.jpg" />
     <Content Include="Template\assets\img\theme\bootstrap.jpg" />
     <Content Include="Template\assets\img\theme\profile-cover.jpg" />
