@@ -10,6 +10,8 @@ namespace School_Scheduler.MVC.Helpers
     /// </summary>
     public static class DateTimeHelperExtensions
     {
+        public static int DaysInMonth(this DateTime dateTime) => DateTime.DaysInMonth(dateTime.Year, dateTime.Month);
+
         /// <summary>
         /// Returns <see langword="true"/> if the <paramref name="dateToCheck"/> is between <paramref name="startDate"/> and the <paramref name="endDate"/>
         /// </summary>

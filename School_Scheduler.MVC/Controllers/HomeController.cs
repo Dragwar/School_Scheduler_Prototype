@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using School_Scheduler.MVC.Models;
@@ -16,13 +17,25 @@ namespace School_Scheduler.MVC.Controllers
         //}
         public static bool IsType<TAppUserType>(this ApplicationUser userToCheck)
             where TAppUserType : ApplicationUser => userToCheck is TAppUserType;
+        public static bool IsType<TAppUserType>(this ApplicationUser userToCheck, out TAppUserType appUser)
+            where TAppUserType : ApplicationUser
+        {
+            if (userToCheck is TAppUserType user)
+            {
+                appUser = user;
+                return true;
+            }
+
+            appUser = null;
+            return false;
+        }
         public static TAppUserType AsType<TAppUserType>(this ApplicationUser userToCheck)
             where TAppUserType : ApplicationUser => userToCheck as TAppUserType;
     }
-
+    class IndexPost { public DateTime DateTime { get; set; } }
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(CalenderDataViewModel model)
         {
             string currentUserId = User.Identity.GetUserId();
             // Discriminator discriminator = User.Identity.GetDiscriminator();
@@ -38,6 +51,10 @@ namespace School_Scheduler.MVC.Controllers
             {
                 SchoolProgram schoolProgram = ((Instructor)foundCurrentUser).SchoolProgram;
                 CalenderDataViewModel viewModel = new CalenderDataViewModel(schoolProgram);
+                if (model != null)
+                {
+                    viewModel.Today = model.Today;
+                }
                 return View(viewModel);
             }
 

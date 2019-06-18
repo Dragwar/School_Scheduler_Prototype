@@ -25,16 +25,17 @@
         for (var i = 0; i < daysInMonth; i++)
         {
             <div class="calenderChild" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
-                <p>@(i + 1)</p>
+                <span>@(i + 1)</span>
                 @if (coursesInRange.Count > 0)
                 {
                     foreach (var course in coursesInRange)
                     {
+
                         for (var startDay = course.StartDate.Day; startDay <= course.EndDate.Day; startDay++)
                         {
                             if ((i + 1) == startDay)
                             {
-                                <small style="margin-left: 15px;">i:@i k:@startDay</small>
+                                <small style="margin-left: 15px;">@course.Name i:@i k:@startDay</small>
                                 <p>This date has @(i + 1) a class</p>
                             }
                         }
@@ -43,7 +44,9 @@
             </div>
         }
     }
-    
+
+
+
     @*}*@
     @*
         @foreach(var schoolProgram in Model.SchoolPrograms)
@@ -53,7 +56,17 @@
         }
     *@
 </div>
-
+<div style="margin-top: 15px;">
+    @using (Html.BeginForm())
+    {
+        @Html.MonthFor(
+            expression: model => model.Today,
+            initialDate: Model.Today,
+            style: null,
+            classNames: null)
+        <button class="btn btn-default" type="submit">Submit</button>
+    }
+</div>
 
 <!--OLD-->
 @*

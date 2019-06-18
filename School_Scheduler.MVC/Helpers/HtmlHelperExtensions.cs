@@ -29,6 +29,13 @@ namespace School_Scheduler.MVC.Helpers
         public static string ToHtmlInputDateValueString(this DateTime date) => date.ToString("yyyy-MM-dd");
 
         /// <summary>
+        /// Returns a usable HTML input[type="month"] value or JS Date string value
+        /// </summary>
+        /// <param name="date">The DateTime to convert (Time and Day will be ignored)</param>
+        /// <returns></returns>
+        public static string ToHtmlInputMonthValueString(this DateTime date) => date.ToString("yyyy-MM");
+
+        /// <summary>
         /// Delegate to select a member of a object (<typeparamref name="TModel"/>) and return the member's value (<typeparamref name="TMember"/>)
         /// </summary>
         /// <typeparam name="TModel">The object type that has a member</typeparam>
@@ -150,10 +157,71 @@ namespace School_Scheduler.MVC.Helpers
             string styleString = style.BuildStyleString();
 
             // make C# DateTime usable for the input tag (html5 input tag doesn't know how to interpret a C# DateTime string)
-            string initialDateTimeString = initialDateTime.HasValue ? initialDateTime.Value.Date.ToHtmlInputDateTimeValueString() : null;
+            string initialDateString = initialDateTime.HasValue ? initialDateTime.Value.Date.ToHtmlInputDateValueString() : null;
             string classString = string.Join(" ", classNames ?? new[] { "form-control" });
 
-            string resultString = $"<input class='{classString}' style='{styleString}' type='date' name='{modelPropertyDateTimeName}' value='{initialDateTimeString}' />";
+            string resultString = $"<input class='{classString}' style='{styleString}' type='date' name='{modelPropertyDateTimeName}' value='{initialDateString}' />";
+
+            return MvcHtmlString.Create(resultString);
+        } 
+        #endregion
+
+        /// <summary>
+        /// Returns a input tag (input[type="month"] tag) and you can provide a style dictionary and any classNames
+        /// </summary>
+        /// <typeparam name="TModel">Model of the Current View</typeparam>
+        /// <param name="htmlHelper"></param>
+        /// <param name="expression">lambda expression to choose DateTime property off of the Model</param>
+        /// <param name="initialDate">initialDate value for the input tag</param>
+        /// <param name="style">inline style for the generated input tag</param>
+        /// <param name="classNames"></param>
+        /// <returns>input[type="month"] tag</returns>
+        public static MvcHtmlString MonthFor<TModel>(
+            this HtmlHelper<TModel> htmlHelper,
+            Expression<SelectMemeber<TModel, DateTime>> expression,
+            [Optional] DateTime? initialDate,
+            [Optional] Dictionary<string, string[]> style,
+            params string[] classNames)
+            where TModel : class
+        {
+            // Get Model DateTime property name (dev has to use a lambda express to select the DateTime property)
+            string modelPropertyDateTimeName = (expression.Body as MemberExpression)?.Member.Name ?? throw new ArgumentException(
+                $"Failed to get DateTime property Name with existing {nameof(expression)}. ({expression.ToString()})",
+                nameof(expression));
+
+            // build style string and skip styles that are empty/null
+            string styleString = style.BuildStyleString();
+
+            // make C# DateTime usable for the input tag (html5 input tag doesn't know how to interpret a C# DateTime string)
+            string initialMonthString = initialDate.HasValue ? initialDate.Value.Date.ToHtmlInputMonthValueString() : null;
+            string classString = string.Join(" ", classNames ?? new[] { "form-control" });
+
+            string resultString = $"<input class='{classString}' style='{styleString}' type='month' name='{modelPropertyDateTimeName}' value='{initialMonthString}' />";
+
+            return MvcHtmlString.Create(resultString);
+        }
+        #region MonthFor<TModel> Overloads
+        public static MvcHtmlString MonthFor<TModel>(
+            this HtmlHelper<TModel> htmlHelper,
+            Expression<SelectMemeber<TModel, DateTime?>> expression,
+            [Optional] DateTime? initialDateTime,
+            [Optional] Dictionary<string, string[]> style,
+            params string[] classNames)
+            where TModel : class
+        {
+            // Get Model DateTime property name (dev has to use a lambda express to select the DateTime property)
+            string modelPropertyDateTimeName = (expression.Body as MemberExpression)?.Member.Name ?? throw new ArgumentException(
+                $"Failed to get DateTime property Name with existing {nameof(expression)}. ({expression.ToString()})",
+                nameof(expression));
+
+            // build style string and skip styles that are empty/null
+            string styleString = style.BuildStyleString();
+
+            // make C# DateTime usable for the input tag (html5 input tag doesn't know how to interpret a C# DateTime string)
+            string initialMonthString = initialDateTime.HasValue ? initialDateTime.Value.Date.ToHtmlInputMonthValueString() : null;
+            string classString = string.Join(" ", classNames ?? new[] { "form-control" });
+
+            string resultString = $"<input class='{classString}' style='{styleString}' type='month' name='{modelPropertyDateTimeName}' value='{initialMonthString}' />";
 
             return MvcHtmlString.Create(resultString);
         } 

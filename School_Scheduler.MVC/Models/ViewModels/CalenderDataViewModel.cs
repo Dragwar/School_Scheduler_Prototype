@@ -7,6 +7,11 @@ namespace School_Scheduler.MVC.Models.ViewModels
     {
         public DateTime Today { get; set; } = DateTime.Now;
         public SchoolProgramViewModel SchoolProgram { get; set; }
+
+        public CalenderDataViewModel()
+        {
+        }
+
         public CalenderDataViewModel(SchoolProgram schoolPrograms)
         {
             if (schoolPrograms == null)
