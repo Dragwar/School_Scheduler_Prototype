@@ -30,12 +30,12 @@ namespace School_Scheduler.MVC.Migrations
             if (!Debugger.IsAttached)
             {
                 // Uncomment line below for debugging this Seed() method
-                System.Diagnostics.Debugger.Launch();
+                // System.Diagnostics.Debugger.Launch();
             }
 
             ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
 
-            string email(string name) => name.Trim().ToLower() + "gmail.com";
+            string email(string name) => name.Trim().ToLower() + "@gmail.com";
             const string password = "Password-1";
 
             List<Student> initialStudents = new List<Student>();
@@ -99,19 +99,6 @@ namespace School_Scheduler.MVC.Migrations
                 //CourseNumber = ,
                 //EnrolledStudents = new List<Student>(initialStudents),
             };
-            //softwareDevelopment.Courses.Add(reactFrontToBack);
-            //room200.Courses.Add(reactFrontToBack);
-            //everett.Courses.Add(reactFrontToBack);
-            //alvi.Courses.Add(reactFrontToBack);
-            //initialStudents.ForEach(student =>
-            //{
-            //    student.CurrentCourse = reactFrontToBack;
-            //    student.CurrentCourseId = reactFrontToBack.Id;
-            //});
-            //everett.SchoolProgram = softwareDevelopment;
-            //everett.SchoolProgramId = softwareDevelopment.Id;
-            //alvi.SchoolProgram = softwareDevelopment;
-            //alvi.SchoolProgramId = softwareDevelopment.Id;
 
             db.ClassRooms.AddOrUpdate(cr => cr.RoomNumber, room200, room126, room104);
             db.SchoolPrograms.AddOrUpdate(sp => sp.Name, softwareDevelopment);

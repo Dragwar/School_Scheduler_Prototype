@@ -10,7 +10,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int RoomNumber { get; set; }
-        public List<CourseViewModel> Courses { get; set; }
+        public IEnumerable<CourseViewModel> Courses { get; set; }
 
 
         public ClassRoomViewModel(ClassRoom classRoom)
@@ -23,7 +23,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
             Id = classRoom.Id;
             Name = classRoom.Name;
             RoomNumber = classRoom.RoomNumber;
-            Courses = classRoom.Courses.Select(cr => new CourseViewModel(cr)).ToList();
+            Courses = classRoom.Courses.Select(cr => new CourseViewModel(cr));
         }
 
         public ClassRoomViewModel()

@@ -20,32 +20,21 @@ namespace School_Scheduler.MVC.Controllers
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            ApplicationDbContext db = new ApplicationDbContext();
+
+
+            ApplicationUser foundCurrentUser = db.Users.FirstOrDefault(user => user.Id == currentUserId);
+
+            bool isInstructor = foundCurrentUser.IsType<Instructor>();
+            bool isStudent = foundCurrentUser.IsType<Student>();
+
+            if (isInstructor)
             {
-
-                ApplicationUser foundCurrentUser = db.Users.FirstOrDefault(user => user.Id == currentUserId);
-
-                bool isInstructor = foundCurrentUser.IsType<Instructor>();
-                bool isStudent = foundCurrentUser.IsType<Student>();
-
-
-                //switch (foundCurrentUser)
-                //{
-                //    case Instructor currentInstructor:
-
-                //        break;
-
-                //    case Student currentStudent: break;
-
-                //    default: /* Notify user of invalid */ break;
-                //}
-                if (isInstructor)
-                {
-                    SchoolProgram schoolProgram = ((Instructor)foundCurrentUser).SchoolProgram;
-                    CalenderDataViewModel viewModel = new CalenderDataViewModel(schoolProgram);
-                    return View(viewModel);
-                }
+                SchoolProgram schoolProgram = ((Instructor)foundCurrentUser).SchoolProgram;
+                CalenderDataViewModel viewModel = new CalenderDataViewModel(schoolProgram);
+                return View(viewModel);
             }
+
             return View("Error");
         }
 

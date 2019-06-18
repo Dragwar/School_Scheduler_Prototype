@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using School_Scheduler.MVC.Models.Domain;
@@ -20,7 +21,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
         public Guid SchoolProgramId { get; set; }
         public InstructorViewModel Instructor { get; set; }
         public string InstructorId { get; set; }
-        public List<StudentViewModel> EnrolledStudents { get; set; }
+        public IEnumerable<StudentViewModel> EnrolledStudents { get; set; }
 
 
         public CourseViewModel(Course course)
@@ -43,7 +44,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
             SchoolProgramId = course.SchoolProgramId;
             Instructor = new InstructorViewModel(course.Instructor);
             InstructorId = course.InstructorId;
-            EnrolledStudents = course.EnrolledStudents.Select(s => new StudentViewModel(s)).ToList();
+            EnrolledStudents = course.EnrolledStudents.Select(s => new StudentViewModel(s));
         }
         public CourseViewModel()
         {

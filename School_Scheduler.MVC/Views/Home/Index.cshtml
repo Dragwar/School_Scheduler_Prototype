@@ -27,7 +27,7 @@
                     <p>@(j + 1)</p>
                     @if (dateInRange)
                     {
-                        Model.SchoolProgram.Courses.Where(c => Model.Today >= c.StartDate && Model.Today <= c.EndDate).FirstOrDefault()
+                        Model.SchoolProgram.Courses.Where(c => Model.Today >= c.StartDate && Model.Today <= c.EndDate).FirstOrDefault();
                     }
                 </div>
             }
