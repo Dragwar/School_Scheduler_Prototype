@@ -22,21 +22,21 @@
             .ToList()
             .FindAll(c => Model.Today.Month == c.StartDate.Month || Model.Today.Month == c.EndDate.Month);
 
-        for (var i = 0; i < daysInMonth; i++)
+        for (var day = 1; day <= daysInMonth; day++)
         {
+            DateTime renderedDay = new DateTime(Model.Today.Year, Model.Today.Month, day);
             <div class="calenderChild" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
-                <span>@(i + 1)</span>
+                <span>@day - @renderedDay.DayOfWeek</span>
                 @if (coursesInRange.Count > 0)
                 {
                     foreach (var course in coursesInRange)
                     {
-
-                        for (var startDay = course.StartDate.Day; startDay <= course.EndDate.Day; startDay++)
+                        for (var courseDay = course.StartDate.Day; courseDay <= course.EndDate.Day; courseDay++)
                         {
-                            if ((i + 1) == startDay)
+                            if (day == courseDay)
                             {
-                                <small style="margin-left: 15px;">@course.Name i:@i k:@startDay</small>
-                                <p>This date has @(i + 1) a class</p>
+                                <small style="margin-left: 15px;">@course.Name i:@day k:@courseDay</small>
+                                <p>This date has @day a class</p>
                             }
                         }
                     }
