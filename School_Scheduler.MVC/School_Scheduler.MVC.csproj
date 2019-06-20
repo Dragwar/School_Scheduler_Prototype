@@ -196,6 +196,8 @@
     <Compile Include="Models\ViewModels\CalenderDataViewModel.cs" />
     <Compile Include="Models\ViewModels\ClassRoomViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseViewModel.cs" />
+    <Compile Include="Models\ViewModels\CreateEditCourseViewModel.cs" />
+    <Compile Include="Models\ViewModels\CreateEditSchoolProgramViewModel.cs" />
     <Compile Include="Models\ViewModels\InstructorViewModel.cs" />
     <Compile Include="Models\ViewModels\SchoolProgramViewModel.cs" />
     <Compile Include="Models\ViewModels\StudentViewModel.cs" />
