@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using School_Scheduler.MVC.Filters;
@@ -48,13 +47,42 @@ namespace School_Scheduler.MVC.Controllers
             return View("Error");
         }
 
-        
+
         [EnsureDiscriminatorClaim(Discriminator.Instructor)]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+
+        public ActionResult FullCalendar()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            SchoolProgram program = db.SchoolPrograms.FirstOrDefault();
+            ViewBag.SP = program;
+            return View();
+        }
+
+        public JsonResult GetEvents()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                SchoolProgram program = db.SchoolPrograms.FirstOrDefault();
+                List<FullCalendarEventViewModel> events = program.Courses.Select((c, i) => new FullCalendarEventViewModel
+                {
+                    EventId = i,
+                    Start = c.StartDate,
+                    End = c.EndDate,
+                    Description = $"{c.ClassRoom.Name} class room (Description)",
+                    IsFullDay = c.EndDate == default || c.EndDate == c.StartDate,
+                    Subject = $"My Subject ({i})",
+                    ThemeColor = "green"
+                }).ToList();
+                return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
         }
     }
 }

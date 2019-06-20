@@ -197,6 +197,7 @@
     <Compile Include="Models\ViewModels\CalenderDataViewModel.cs" />
     <Compile Include="Models\ViewModels\ClassRoomViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseViewModel.cs" />
+    <Compile Include="Models\ViewModels\FullCalendarEventViewModel.cs" />
     <Compile Include="Models\ViewModels\InstructorViewModel.cs" />
     <Compile Include="Models\ViewModels\SchoolProgramViewModel.cs" />
     <Compile Include="Models\ViewModels\StudentViewModel.cs" />
@@ -2187,6 +2188,8 @@
     <Content Include="Template\LICENSE.md" />
     <Content Include="Template\package.json" />
     <Content Include="Template\README.md" />
+    <Content Include="Views\Shared\_FullCalendarLinks.cshtml" />
+    <Content Include="Views\Home\FullCalendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
