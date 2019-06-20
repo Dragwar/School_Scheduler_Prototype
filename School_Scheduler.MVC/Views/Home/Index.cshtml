@@ -20,7 +20,7 @@
 
         var coursesInRange = Model.SchoolProgram.Courses
             .ToList()
-            .FindAll(c => Model.Today.Month == c.StartDate.Month || Model.Today.Month == c.EndDate.Month);
+        .FindAll(c => Model.Today.Month >= c.StartDate.Month && Model.Today.Month <= c.EndDate.Month);
 
         for (var day = 1; day <= daysInMonth; day++)
         {
@@ -31,12 +31,20 @@
                 {
                     foreach (var course in coursesInRange)
                     {
-                        for (var courseDay = course.StartDate.Day; courseDay <= course.EndDate.Day; courseDay++)
+                        for (var courseDay = 1; courseDay <= daysInMonth; courseDay++)
                         {
+                            if (renderedDay > course.EndDate)
+                            {
+                                break;
+                            }
+
                             if (day == courseDay)
                             {
-                                <small style="margin-left: 15px;">@course.Name i:@day k:@courseDay</small>
-                                <p>This date has @day a class</p>
+                                if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
+                                {
+                                    <small style="margin-left: 15px;">@course.Name i:@day k:@courseDay</small>
+                                    <p>This date has @day a class</p>
+                                }
                             }
                         }
                     }
