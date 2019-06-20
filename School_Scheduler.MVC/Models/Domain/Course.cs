@@ -143,7 +143,7 @@ namespace School_Scheduler.MVC.Models.Domain
             //    .WithMany(s => s.Courses);
 
             HasMany(c => c.EnrolledStudents)
-                .WithRequired(s => s.CurrentCourse)
+                .WithOptional(s => s.CurrentCourse)
                 .HasForeignKey(s => s.CurrentCourseId);
         }
     }

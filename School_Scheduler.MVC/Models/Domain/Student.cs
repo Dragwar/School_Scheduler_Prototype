@@ -27,7 +27,7 @@ namespace School_Scheduler.MVC.Models.Domain
         /// <summary>
         /// Foreign Key for the <see cref="Course"/> navigational property
         /// </summary>
-        public Guid CurrentCourseId { get; set; }
+        public Guid? CurrentCourseId { get; set; }
 
         /// <summary>
         /// Navigational property to the <see cref="Student"/>'s Current <see cref="Domain.SchoolProgram"/>
@@ -37,7 +37,7 @@ namespace School_Scheduler.MVC.Models.Domain
         /// <summary>
         /// Foreign Key for the <see cref="Domain.SchoolProgram"/> navigational property
         /// </summary>
-        public Guid SchoolProgramId { get; set; }
+        public Guid? SchoolProgramId { get; set; }
 
         public override string ToString() => $"Student: {Name}, {StudentNumber}";
     }
@@ -55,14 +55,14 @@ namespace School_Scheduler.MVC.Models.Domain
 
 
 
-            HasRequired(s => s.SchoolProgram)
+            HasOptional(s => s.SchoolProgram)
                 .WithMany(sp => sp.EnrolledStudents)
                 .HasForeignKey(s => s.SchoolProgramId);
 
             //    HasMany(s => s.Courses)
             //        .WithMany(c => c.EnrolledStudents);
 
-            HasRequired(s => s.CurrentCourse)
+            HasOptional(s => s.CurrentCourse)
                 .WithMany(c => c.EnrolledStudents)
                 .HasForeignKey(s => s.CurrentCourseId)
                 .WillCascadeOnDelete(false);

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using School_Scheduler.MVC.Filters;
 using School_Scheduler.MVC.Helpers;
 using School_Scheduler.MVC.Models;
 using School_Scheduler.MVC.Models.Domain;
@@ -22,6 +23,12 @@ namespace School_Scheduler.MVC.Controllers
 
             if (discriminator == Discriminator.Instructor)
             {
+                if (((Instructor)foundCurrentUser).SchoolProgram == null)
+                {
+                    ModelState.AddModelError("key", "You don't have a SchoolProgram to display");
+                    return View("Error");
+                }
+
                 SchoolProgram schoolProgram = ((Instructor)foundCurrentUser).SchoolProgram;
                 CalenderDataViewModel viewModel = new CalenderDataViewModel(schoolProgram);
                 if (model != null)
@@ -30,7 +37,7 @@ namespace School_Scheduler.MVC.Controllers
                 }
                 return View(viewModel);
             }
-
+            ModelState.AddModelError("Invalid User", "Hello there");
             return View("Error");
         }
 
@@ -38,9 +45,11 @@ namespace School_Scheduler.MVC.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return View("Error");
         }
 
+        
+        [EnsureDiscriminatorClaim(Discriminator.Instructor)]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

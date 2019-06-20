@@ -66,12 +66,12 @@ namespace School_Scheduler.MVC.Models.Domain
                 .HasForeignKey(c => c.SchoolProgramId);
 
             HasMany(sp => sp.Instructors)
-                .WithRequired(i => i.SchoolProgram)
+                .WithOptional(i => i.SchoolProgram)
                 .HasForeignKey(i => i.SchoolProgramId)
                 .WillCascadeOnDelete(false);
 
             HasMany(sp => sp.EnrolledStudents)
-                .WithRequired(s => s.SchoolProgram)
+                .WithOptional(s => s.SchoolProgram)
                 .HasForeignKey(s => s.SchoolProgramId)
                 .WillCascadeOnDelete(false);
         }
