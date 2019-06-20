@@ -8,72 +8,104 @@
     .calenderContainer {
         display: flex;
         flex-flow: row wrap;
+        justify-content: flex-start;
+    }
+
+    .calenderChild {
+        margin: 5px;
+        border-radius: 9px;
+    }
+
+    .dayHeading {
+        text-align: center;
+    }
+
+    .weekendDay {
+        background-color: darkorange;
     }
 </style>
 
-<div>Program - @Model.SchoolProgram.Name</div>
+@*<div>Program - @Model.SchoolProgram.Name</div>*@
 
 <!--NEW-->
-<div class="calenderContainer">
-    @{
-        var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, Model.Today.Month);
+<div class="card bg-gradient-white shadow">
+    <div style="text-align: center" class="card-header bg-transparent">@Model.SchoolProgram.Name</div>
+    <div class="calenderContainer">
+        @{
+            var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, Model.Today.Month);
 
-        var coursesInRange = Model.SchoolProgram.Courses
-            .ToList()
-        .FindAll(c => Model.Today.Month >= c.StartDate.Month && Model.Today.Month <= c.EndDate.Month);
+            var coursesInRange = Model.SchoolProgram.Courses
+                .ToList()
+            .FindAll(c => Model.Today.Month >= c.StartDate.Month && Model.Today.Month <= c.EndDate.Month);
 
-        for (var day = 1; day <= daysInMonth; day++)
-        {
-            DateTime renderedDay = new DateTime(Model.Today.Year, Model.Today.Month, day);
-            <div class="calenderChild" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
-                <span>@day - @renderedDay.DayOfWeek</span>
-                @if (coursesInRange.Count > 0)
-                {
-                    foreach (var course in coursesInRange)
+            for (var day = 1; day <= daysInMonth; day++)
+            {
+                DateTime renderedDay = new DateTime(Model.Today.Year, Model.Today.Month, day);
+                <div class="calenderChild dayHeading @renderedDay.DayOfWeek" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
+
+                    <span>@day  @renderedDay.DayOfWeek</span>
+                    @if (coursesInRange.Count > 0)
                     {
-                        for (var courseDay = 1; courseDay <= daysInMonth; courseDay++)
+                        foreach (var course in coursesInRange)
                         {
-                            if (renderedDay > course.EndDate)
+                            for (var courseDay = 1; courseDay <= daysInMonth; courseDay++)
                             {
-                                break;
-                            }
-
-                            if (day == courseDay)
-                            {
-                                if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
+                                if (renderedDay > course.EndDate)
                                 {
-                                    <small style="margin-left: 15px;">@course.Name i:@day k:@courseDay</small>
-                                    <p>This date has @day a class</p>
+                                    break;
+                                }
+
+                                if (day == courseDay)
+                                {
+                                    if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
+                                    {
+                                        <small style="margin-left: 15px;">@course.Name i:@day k:@courseDay</small>
+                                        <p>This date has @day a class</p>
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            </div>
+                </div>
+            }
+            <script>
+                var allSaturdays = document.querySelectorAll(".Saturday");
+                var allSundays = document.querySelectorAll(".Sunday");
+
+                allSaturdays.forEach(element =>
+                {
+                    element.classList.add("weekendDay");
+                });
+
+                allSundays.forEach(element => {
+                    element.classList.add("weekendDay");
+                });
+
+            </script>
         }
-    }
 
 
 
-    @*}*@
-    @*
-        @foreach(var schoolProgram in Model.SchoolPrograms)
+        @*}*@
+        @*
+            @foreach(var schoolProgram in Model.SchoolPrograms)
+            {
+                <div>
+                </div>
+            }
+        *@
+    </div>
+    <div style="margin-top: 15px;">
+        @using (Html.BeginForm())
         {
-            <div>
-            </div>
+            @Html.MonthFor(
+                expression: model => model.Today,
+                initialDate: Model.Today,
+                style: null,
+                classNames: null)
+            <button class="btn btn-default" type="submit">Submit</button>
         }
-    *@
-</div>
-<div style="margin-top: 15px;">
-    @using (Html.BeginForm())
-    {
-        @Html.MonthFor(
-            expression: model => model.Today,
-            initialDate: Model.Today,
-            style: null,
-            classNames: null)
-        <button class="btn btn-default" type="submit">Submit</button>
-    }
+    </div>
 </div>
 
 <!--OLD-->
