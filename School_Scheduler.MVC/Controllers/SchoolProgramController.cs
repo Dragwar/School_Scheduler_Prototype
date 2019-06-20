@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
+using School_Scheduler.MVC.Filters;
+using School_Scheduler.MVC.Helpers;
 using School_Scheduler.MVC.Models;
 using School_Scheduler.MVC.Models.Domain;
 using School_Scheduler.MVC.Models.ViewModels;
@@ -20,12 +22,14 @@ namespace School_Scheduler.MVC.Controllers
             DbContext = new ApplicationDbContext();
         }
 
+        [EnsureDiscriminatorClaim(Discriminator.Instructor, Discriminator.Student)]
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
+        [EnsureDiscriminatorClaim(Discriminator.Instructor)]
         public ActionResult CreateProgram()
         {
             // TODO: You must check the user's discriminator (Instructor)
@@ -33,6 +37,8 @@ namespace School_Scheduler.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [EnsureDiscriminatorClaim(Discriminator.Instructor)]
         public ActionResult CreateProgram(CreateEditSchoolProgramViewModel model)
         {
             if (!ModelState.IsValid)
@@ -72,6 +78,7 @@ namespace School_Scheduler.MVC.Controllers
         //}
 
         [HttpGet]
+        [EnsureDiscriminatorClaim(Discriminator.Instructor)]
         public ActionResult EditProgram(Guid id)
         {
             var program = DbContext.SchoolPrograms.FirstOrDefault(
@@ -96,6 +103,8 @@ namespace School_Scheduler.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [EnsureDiscriminatorClaim(Discriminator.Instructor)]
         public ActionResult EditProgram(Guid id, CreateEditSchoolProgramViewModel model)
         {
             if (!ModelState.IsValid)
@@ -117,6 +126,7 @@ namespace School_Scheduler.MVC.Controllers
             return View();
         }
 
+        [EnsureDiscriminatorClaim(Discriminator.Instructor, Discriminator.Student)]
         public ActionResult Details()
         {
 
@@ -124,6 +134,8 @@ namespace School_Scheduler.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [EnsureDiscriminatorClaim(Discriminator.Instructor)]
         public ActionResult Delete(string name)
         {
             var program = DbContext.SchoolPrograms.FirstOrDefault(

@@ -18,7 +18,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44317</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -197,7 +198,6 @@
     <Compile Include="Models\ViewModels\CalenderDataViewModel.cs" />
     <Compile Include="Models\ViewModels\ClassRoomViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseViewModel.cs" />
-    <Compile Include="Models\ViewModels\CreateEditCourseViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateEditSchoolProgramViewModel.cs" />
     <Compile Include="Models\ViewModels\InstructorViewModel.cs" />
     <Compile Include="Models\ViewModels\SchoolProgramViewModel.cs" />
@@ -2189,13 +2189,14 @@
     <Content Include="Template\LICENSE.md" />
     <Content Include="Template\package.json" />
     <Content Include="Template\README.md" />
+    <Content Include="Views\SchoolProgram\CreateProgram.cshtml" />
+    <Content Include="Views\SchoolProgram\EditProgram.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ClassRoom\" />
     <Folder Include="Views\Course\" />
     <Folder Include="Views\Instructor\" />
-    <Folder Include="Views\SchoolProgram\" />
     <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>
