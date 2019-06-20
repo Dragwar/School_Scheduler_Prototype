@@ -27,7 +27,7 @@ namespace School_Scheduler.MVC.Models.Domain
         /// <summary>
         /// Foreign Key for the <see cref="Domain.SchoolProgram"/> navigational property
         /// </summary> 
-        public Guid SchoolProgramId { get; set; }
+        public Guid? SchoolProgramId { get; set; }
 
         /// <summary>
         /// Creates a new <see cref="Instructor"/> with a empty courses and a unique <see cref="Guid"/> <see cref="Id"/>
@@ -56,7 +56,7 @@ namespace School_Scheduler.MVC.Models.Domain
                 .WithRequired(c => c.Instructor)
                 .HasForeignKey(c => c.InstructorId);
 
-            HasRequired(i => i.SchoolProgram)
+            HasOptional(i => i.SchoolProgram)
                 .WithMany(sp => sp.Instructors)
                 .HasForeignKey(i => i.SchoolProgramId);
         }

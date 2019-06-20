@@ -24,7 +24,7 @@ namespace School_Scheduler.MVC.Models.ViewModels
             Name = instructor.Name;
             InstructorNumber = instructor.InstructorNumber;
             Courses = instructor.Courses.Select(c => new CourseViewModel(c));
-            SchoolProgram = new SchoolProgramViewModel(instructor.SchoolProgram);
+            SchoolProgram = instructor.SchoolProgram != null ? new SchoolProgramViewModel(instructor.SchoolProgram) : null;
         }
         public InstructorViewModel()
         {

@@ -9,9 +9,9 @@ namespace School_Scheduler.MVC.Models.ViewModels
         public string Name { get; set; }
         public int StudentNumber { get; set; }
         public CourseViewModel CurrentCourse { get; set; }
-        public Guid CurrentCourseId { get; set; }
+        public Guid? CurrentCourseId { get; set; }
         public SchoolProgramViewModel SchoolProgram { get; set; }
-        public Guid SchoolProgramId { get; set; }
+        public Guid? SchoolProgramId { get; set; }
 
         public StudentViewModel(Student student)
         {
@@ -23,9 +23,9 @@ namespace School_Scheduler.MVC.Models.ViewModels
             Id = student.Id;
             Name = student.Name;
             StudentNumber = student.StudentNumber;
-            CurrentCourse = new CourseViewModel(student.CurrentCourse);
+            CurrentCourse = student.CurrentCourse != null ? new CourseViewModel(student.CurrentCourse) : null;
             CurrentCourseId = student.CurrentCourseId;
-            SchoolProgram = new SchoolProgramViewModel(student.SchoolProgram);
+            SchoolProgram = student.SchoolProgram != null ? new SchoolProgramViewModel(student.SchoolProgram) : null;
             SchoolProgramId = student.SchoolProgramId;
         }
         public StudentViewModel()
