@@ -1,0 +1,132 @@
+﻿@using Microsoft.AspNet.Identity
+@model IndexForStudentViewModel
+@{
+    ViewBag.Title = "IndexByStudent";
+}
+
+<style>
+    .calenderContainer {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .calenderChild {
+        margin: 5px;
+        border-radius: 9px;
+    }
+
+    .dayHeading {
+        text-align: center;
+    }
+
+    .weekendDay {
+        background-color: darkorange;
+    }
+</style>
+
+<h2>Index For Student</h2>
+
+<div style="margin-top: 15px; display: inline-block;">
+    @using (Html.BeginForm())
+    {
+        @Html.MonthFor(
+            expression: model => model.Today,
+            initialDate: Model.Today,
+            style: null,
+            classNames: null)
+        <button class="btn btn-default" type="submit">Submit</button>
+    }
+</div>
+
+<div class="card bg-gradient-white shadow">
+    <div style="text-align: center" class="card-header bg-transparent">@Model.CurrentCourse.SchoolProgram.Name</div>
+    <div class="calenderContainer">
+        @{
+            var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, Model.Today.Month);
+
+            CourseViewModel course;
+
+            if (Model.Today.Month >= Model.CurrentCourse.StartDate.Month && Model.Today.Month <= Model.CurrentCourse.EndDate.Month)
+            {
+                course = Model.CurrentCourse;
+            }
+            else
+            {
+                course = null;
+            }
+
+            for (var day = 1; day <= daysInMonth; day++)
+            {
+                DateTime renderedDay = new DateTime(Model.Today.Year, Model.Today.Month, day);
+                <div class="calenderChild dayHeading @renderedDay.DayOfWeek" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
+
+                    <span>@day  @renderedDay.DayOfWeek</span>
+                    @if (course != null && renderedDay.DayOfWeek.ToString() != "Saturday" && renderedDay.DayOfWeek.ToString() != "Sunday")
+                    {
+                        if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
+                        {
+                            <a href="@Url.Action("CoursesByDate", "Home", new { date = DateTime.Now })">Details</a>
+                            var currentUserId = User.Identity.GetUserId();
+                            if (course.EnrolledStudents.Any(r => r.Id == currentUserId))
+                            {
+                                <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">@course.Name</a>
+                            }
+                        }
+                    }
+                    @*else if (coursesInRange.Count >= 4)
+                        {
+                            foreach (var course in coursesInRange)
+                            {
+                                if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
+                                {
+                                    if (course.InstructorId == User.Identity.GetUserId())
+                                    {
+                                        <details>
+                                            <ul id="@day-unique">
+                                                <li>
+                                                    <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">
+                                                        @course.Name
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </details>
+                                    }
+                                }
+                            }
+                        }*@
+                </div>
+            }
+            <script>
+                var allSaturdays = document.querySelectorAll(".Saturday");
+                var allSundays = document.querySelectorAll(".Sunday");
+
+                allSaturdays.forEach(element => {
+                    element.classList.add("weekendDay");
+                });
+
+                allSundays.forEach(element => {
+                    element.classList.add("weekendDay");
+                });
+
+            </script>
+        }
+
+
+
+        @*}*@
+        @*
+            @foreach(var schoolProgram in Model.SchoolPrograms)
+            {
+                <div>
+                </div>
+            }
+        *@
+    </div>
+</div>
+
+<footer style="margin-bottom: 100px">
+    <div>Tadaaa!</div>
+</footer>

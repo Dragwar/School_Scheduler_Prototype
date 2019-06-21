@@ -1,0 +1,26 @@
+﻿@model CoursesByDateViewModel
+
+@{
+    ViewBag.Title = "CoursesByDate";
+}
+
+<h2>Courses By Date</h2>
+
+@if (Model.Courses.Any())
+{
+    <div class="container">
+
+        @foreach (var course in Model.Courses)
+        {
+            <div>
+                <h3>@course.Name</h3>
+                <p>Program: @course.SchoolProgram.Name</p>
+                <p>Room Number: @course.ClassRoom.RoomNumber</p>
+                <p>Class Start Time: @course.ClassStartTime</p>
+                <p>Class End Time: @course.ClassEndTime</p>
+                <p>Course End Date: @course.EndDate</p>
+                <p>Course Instructor Name: @course.Instructor.Name</p>
+            </div>
+        }
+    </div>
+}

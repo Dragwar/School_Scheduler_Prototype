@@ -1,4 +1,5 @@
-﻿@model CalenderDataViewModel
+﻿@using Microsoft.AspNet.Identity
+@model CalenderDataViewModel
 
 @{
     ViewBag.Title = "Home Page";
@@ -8,7 +9,9 @@
     .calenderContainer {
         display: flex;
         flex-flow: row wrap;
-        justify-content: flex-start;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .calenderChild {
@@ -28,6 +31,19 @@
 @*<div>Program - @Model.SchoolProgram.Name</div>*@
 
 <!--NEW-->
+
+<div style="margin-top: 15px; display: inline-block;">
+    @using (Html.BeginForm())
+    {
+        @Html.MonthFor(
+            expression: model => model.Today,
+            initialDate: Model.Today,
+            style: null,
+            classNames: null)
+        <button class="btn btn-default" type="submit">Submit</button>
+    }
+</div>
+
 <div class="card bg-gradient-white shadow">
     <div style="text-align: center" class="card-header bg-transparent">@Model.SchoolProgram.Name</div>
     <div class="calenderContainer">
@@ -44,36 +60,48 @@
                 <div class="calenderChild dayHeading @renderedDay.DayOfWeek" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
 
                     <span>@day  @renderedDay.DayOfWeek</span>
-                    @if (coursesInRange.Count > 0)
+                    @if (coursesInRange.Count > 0 && renderedDay.DayOfWeek.ToString() != "Saturday" && renderedDay.DayOfWeek.ToString() != "Sunday")
                     {
                         foreach (var course in coursesInRange)
                         {
-                            for (var courseDay = 1; courseDay <= daysInMonth; courseDay++)
+                            if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
                             {
-                                if (renderedDay > course.EndDate)
+                                <a style="display: block" href="@Url.Action("CoursesByDate", "Home", new { date = DateTime.Now })">Details</a>
+                                if (course.InstructorId == User.Identity.GetUserId())
                                 {
-                                    break;
-                                }
-
-                                if (day == courseDay)
-                                {
-                                    if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
-                                    {
-                                        <small style="margin-left: 15px;">@course.Name i:@day k:@courseDay</small>
-                                        <p>This date has @day a class</p>
-                                    }
+                                    <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">@course.Name</a>
                                 }
                             }
                         }
                     }
+                    @*else if (coursesInRange.Count >= 4)
+                    {
+                        foreach (var course in coursesInRange)
+                        {
+                            if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
+                            {
+                                if (course.InstructorId == User.Identity.GetUserId())
+                                {
+                                    <details>
+                                        <ul id="@day-unique">
+                                            <li>
+                                                <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">
+                                                    @course.Name
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                }
+                            }
+                        }
+                    }*@
                 </div>
             }
             <script>
                 var allSaturdays = document.querySelectorAll(".Saturday");
                 var allSundays = document.querySelectorAll(".Sunday");
 
-                allSaturdays.forEach(element =>
-                {
+                allSaturdays.forEach(element => {
                     element.classList.add("weekendDay");
                 });
 
@@ -95,18 +123,11 @@
             }
         *@
     </div>
-    <div style="margin-top: 15px;">
-        @using (Html.BeginForm())
-        {
-            @Html.MonthFor(
-                expression: model => model.Today,
-                initialDate: Model.Today,
-                style: null,
-                classNames: null)
-            <button class="btn btn-default" type="submit">Submit</button>
-        }
-    </div>
 </div>
+
+<footer style="margin-bottom: 100px">
+    <div>Tadaaa!</div>
+</footer>
 
 <!--OLD-->
 @*
