@@ -63,16 +63,16 @@
                 <div class="calenderChild dayHeading @renderedDay.DayOfWeek" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
 
                     <span>@day  @renderedDay.DayOfWeek</span>
-                    @if (coursesInRange.Count > 0 && renderedDay.DayOfWeek.ToString() != "Saturday" && renderedDay.DayOfWeek.ToString() != "Sunday")
+                    @if (coursesInRange.Count > 0 && renderedDay.DayOfWeek != DayOfWeek.Saturday && renderedDay.DayOfWeek != DayOfWeek.Sunday)
                     {
                         foreach (var course in coursesInRange)
                         {
                             if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
                             {
-                                <a style="display: block" href="@Url.Action("CoursesByDate", "Home", new { date = DateTime.Now })">Details</a>
+                                <a style="display: block" href="@Url.Action(nameof(HomeController.CoursesByDate), MiscExt.GetName<HomeController>(), new { date = renderedDay })">Details</a>
                                 if (course.InstructorId == User.Identity.GetUserId())
                                 {
-                                    <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">@course.Name</a>
+                                    <a href="@Url.Action(nameof(CourseController.Details), MiscExt.GetName<CourseController>(), new { course.Id })" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">@course.Name</a>
                                 }
                             }
                         }
