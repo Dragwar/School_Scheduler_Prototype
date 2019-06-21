@@ -98,7 +98,7 @@ namespace School_Scheduler.MVC.Controllers
 
                 var model = new CoursesByDateViewModel();
                 SchoolProgram schoolProgram = ((Instructor)foundCurrentUser).SchoolProgram;
-                var courses = db.Courses.Where(p => p.InstructorId == currentUserId).Select(r => new CourseViewModel
+                var courses = db.Courses.Where(p => p.InstructorId == currentUserId).ToList().Where(r => date.InRange(r.StartDate, r.EndDate.AddDays(1))).Select(r => new CourseViewModel
                 {
                     ClassEndTime = r.ClassEndTime,
                     ClassRoomId = r.ClassRoomId,
@@ -140,7 +140,7 @@ namespace School_Scheduler.MVC.Controllers
 
                 var model = new CoursesByDateViewModel();
                 SchoolProgram schoolProgram = ((Student)foundCurrentUser).SchoolProgram;
-                var courses = db.Courses.Where(p => p.EnrolledStudents.Any(q => q.Id == currentUserId)).Select(r => new CourseViewModel
+                var courses = db.Courses.Where(p => p.EnrolledStudents.Any(q => q.Id == currentUserId)).ToList().Where(r => date.InRange(r.StartDate, r.EndDate.AddDays(1))).Select(r => new CourseViewModel
                 {
                     ClassEndTime = r.ClassEndTime,
                     ClassRoomId = r.ClassRoomId,
