@@ -135,6 +135,7 @@ namespace School_Scheduler.MVC.Controllers
                 return View(model);
             }
 
+            model.Name = model.Name.Trim();
 
             string userId = User.Identity.GetUserId();
 
@@ -228,6 +229,8 @@ namespace School_Scheduler.MVC.Controllers
             {
                 return View(model);
             }
+
+            model.Name = model.Name.Trim();
             string userId = User.Identity.GetUserId();
 
             if (User.Identity.GetUserDiscriminator() == Discriminator.Instructor)
