@@ -10,6 +10,8 @@ namespace School_Scheduler.MVC.Helpers
     /// </summary>
     public static class DateTimeHelperExtensions
     {
+        public static string TimeSpan12HourString(this TimeSpan time) => new DateTime().Add(time).ToString("hh:mm tt");
+
         public static int DaysInMonth(this DateTime dateTime) => DateTime.DaysInMonth(dateTime.Year, dateTime.Month);
 
         /// <summary>
