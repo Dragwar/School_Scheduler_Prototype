@@ -32,20 +32,23 @@
 
 <!--NEW-->
 
-<div style="margin-top: 15px; display: inline-block;">
-    @using (Html.BeginForm())
-    {
-        @Html.MonthFor(
-            expression: model => model.Today,
-            initialDate: Model.Today,
-            style: null,
-            classNames: null)
-        <button class="btn btn-default" type="submit">Submit</button>
-    }
-</div>
+
 
 <div class="card bg-gradient-white shadow">
-    <div style="text-align: center" class="card-header bg-transparent">@Model.SchoolProgram.Name</div>
+    <div class="form-inline container">
+        <div style="margin-top: 15px;">
+            @using (Html.BeginForm())
+            {
+                @Html.MonthFor(
+                    expression: model => model.Today,
+                    initialDate: Model.Today,
+                    style: null,
+                    classNames: null)
+                <button class="btn btn-default" type="submit">Submit</button>
+            }
+        </div>
+        <div style="text-align: center" class="card-header bg-transparent">@Model.SchoolProgram.Name</div>
+    </div>
     <div class="calenderContainer">
         @{
             var daysInMonth = DateTime.DaysInMonth(Model.Today.Year, Model.Today.Month);
@@ -75,26 +78,26 @@
                         }
                     }
                     @*else if (coursesInRange.Count >= 4)
-                    {
-                        foreach (var course in coursesInRange)
                         {
-                            if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
+                            foreach (var course in coursesInRange)
                             {
-                                if (course.InstructorId == User.Identity.GetUserId())
+                                if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
                                 {
-                                    <details>
-                                        <ul id="@day-unique">
-                                            <li>
-                                                <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">
-                                                    @course.Name
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </details>
+                                    if (course.InstructorId == User.Identity.GetUserId())
+                                    {
+                                        <details>
+                                            <ul id="@day-unique">
+                                                <li>
+                                                    <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">
+                                                        @course.Name
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </details>
+                                    }
                                 }
                             }
-                        }
-                    }*@
+                        }*@
                 </div>
             }
             <script>
@@ -125,9 +128,7 @@
     </div>
 </div>
 
-<footer style="margin-bottom: 100px">
-    <div>Tadaaa!</div>
-</footer>
+@Html.Partial("_Footer")
 
 <!--OLD-->
 @*
