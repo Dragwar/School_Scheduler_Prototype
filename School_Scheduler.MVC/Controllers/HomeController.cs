@@ -100,6 +100,7 @@ namespace School_Scheduler.MVC.Controllers
                 SchoolProgram schoolProgram = ((Instructor)foundCurrentUser).SchoolProgram;
                 var courses = db.Courses.Where(p => p.InstructorId == currentUserId).ToList().Where(r => date.InRange(r.StartDate, r.EndDate.AddDays(1))).Select(r => new CourseViewModel
                 {
+                    Id = r.Id,
                     ClassEndTime = r.ClassEndTime,
                     ClassRoomId = r.ClassRoomId,
                     ClassRoom = new ClassRoomViewModel

@@ -133,11 +133,12 @@
                 @if (foundCourse.InstructorId == userId)
                 {
                     <div class="card-group">
-                        @using (Html.BeginForm(nameof(SchoolProgramController.Edit), MiscExt.GetName<SchoolProgramController>(), FormMethod.Get, new { foundCourse.Id }))
-                        {
-                            <button type="submit" class="btn btn-outline-warning">Edit</button>
-                        }
-                    </div>
+                        @using (Html.BeginForm(nameof(CourseController.Edit), MiscExt.GetName<CourseController>
+    (), new { foundCourse.Id }, FormMethod.Get, new { foundCourse.Id }))
+    {
+    <button type="submit" class="btn btn-outline-warning">Edit</button>
+    }
+</div>
                 }
             </div>
         </div>
