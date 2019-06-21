@@ -61,11 +61,12 @@
             {
                 DateTime renderedDay = new DateTime(Model.Today.Year, Model.Today.Month, day);
                 <div class="calenderChild dayHeading @renderedDay.DayOfWeek" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
-
-                    <span>@day  @renderedDay.DayOfWeek</span>
+                    <div style="display: flex; flex-flow: row nowrap; justify-content: space-between; width: 100%;">
+                        <div>@day</div>  <div>@renderedDay.DayOfWeek</div>
+                    </div>
                     @if (coursesInRange.Count > 0 && renderedDay.DayOfWeek != DayOfWeek.Saturday && renderedDay.DayOfWeek != DayOfWeek.Sunday)
                     {
-                        if(coursesInRange.Any(p => p.StartDate <= renderedDay && p.EndDate >= renderedDay))
+                        if (coursesInRange.Any(p => p.StartDate <= renderedDay && p.EndDate >= renderedDay))
                         {
                             <a style="display: block" href="@Url.Action(nameof(HomeController.CoursesByDate), MiscExt.GetName<HomeController>(), new { date = renderedDay })">Details</a>
                         }

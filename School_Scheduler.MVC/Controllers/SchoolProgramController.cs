@@ -132,22 +132,27 @@ namespace School_Scheduler.MVC.Controllers
             {
                 return View(model);
             }
-
-            model.Name = model.Name.Trim();
-            if (DbContext.SchoolPrograms.Any(sp => sp.Name.ToLower() == model.Name.ToLower()))
-            {
-                ModelState.AddModelError(nameof(CreateEditSchoolProgramViewModel.Name), "Program Name should be unique");
-                return View(model);
-            }
-
-            string userId = User.Identity.GetUserId();
-
             SchoolProgram foundSchoolProgram = DbContext.SchoolPrograms.FirstOrDefault(sp => sp.Id == id);
             if (foundSchoolProgram == null)
             {
                 ModelState.AddModelError("", "School Program was not found");
                 return View("Error");
             }
+
+            model.Name = model.Name.Trim();
+
+            if (foundSchoolProgram.Name.ToLower() != model.Name.ToLower())
+            {
+                if (DbContext.SchoolPrograms.Any(sp => sp.Name.ToLower() == model.Name.ToLower()))
+                {
+                    ModelState.AddModelError(nameof(CreateEditSchoolProgramViewModel.Name), "Program Name should be unique");
+                    return View(model);
+                }
+            }
+
+            string userId = User.Identity.GetUserId();
+
+
             if (!foundSchoolProgram.Instructors.Any(i => i.Id == userId))
             {
                 ModelState.AddModelError("", "You aren't part of this School Program therefore you can't edit it");

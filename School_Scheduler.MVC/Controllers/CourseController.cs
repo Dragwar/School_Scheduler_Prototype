@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -241,11 +242,13 @@ namespace School_Scheduler.MVC.Controllers
                     ModelState.AddModelError("", "You can't edit a course that you don't belong to");
                     return View("Error");
                 }
-
-                if (foundCourse.SchoolProgram.Courses.Any(course => course.Name.ToLower() == model.Name.ToLower()))
+                if (foundCourse.Name.ToLower() != model.Name.ToLower())
                 {
-                    ModelState.AddModelError(nameof(model.Name), $"The course name ({model.Name}) is already taken in the school program that you have selected ({foundCourse.Name})");
-                    return View(model);
+                    if (foundCourse.SchoolProgram.Courses.Any(course => course.Name.ToLower() == model.Name.ToLower()))
+                    {
+                        ModelState.AddModelError(nameof(model.Name), $"The course name ({model.Name}) is already taken in the school program that you have selected ({foundCourse.Name})");
+                        return View(model);
+                    }
                 }
 
                 foundCourse.Name = model.Name;

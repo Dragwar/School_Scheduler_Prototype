@@ -64,13 +64,14 @@
             {
                 DateTime renderedDay = new DateTime(Model.Today.Year, Model.Today.Month, day);
                 <div class="calenderChild dayHeading @renderedDay.DayOfWeek" style="display: flex; flex-flow: row wrap; width: 150px; height: 150px; border: 1px solid black; padding: 5px;">
-
-                    <span>@day  @renderedDay.DayOfWeek</span>
+                    <div style="display: flex; flex-flow: row nowrap; justify-content: space-between; width: 100%;">
+                        <div>@day</div>  <div>@renderedDay.DayOfWeek</div>
+                    </div>
                     @if (course != null && renderedDay.DayOfWeek.ToString() != "Saturday" && renderedDay.DayOfWeek.ToString() != "Sunday")
                     {
                         if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
                         {
-                            <a href="@Url.Action(nameof(HomeController.CoursesByDate), MiscExt.GetName<HomeController>(), new { date = renderedDay })">Details</a>
+                            <a style="display: block" href="@Url.Action(nameof(HomeController.CoursesByDate), MiscExt.GetName<HomeController>(), new { date = renderedDay })">Details</a>
                             var currentUserId = User.Identity.GetUserId();
                             if (course.EnrolledStudents.Any(r => r.Id == currentUserId))
                             {
@@ -79,26 +80,26 @@
                         }
                     }
                     @*else if (coursesInRange.Count >= 4)
-                        {
-                            foreach (var course in coursesInRange)
-                            {
-                                if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
-                                {
-                                    if (course.InstructorId == User.Identity.GetUserId())
-                                    {
-                                        <details>
-                                            <ul id="@day-unique">
-                                                <li>
-                                                    <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">
-                                                        @course.Name
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </details>
-                                    }
-                                }
-                            }
-                        }*@
+        {
+            foreach (var course in coursesInRange)
+            {
+                if (renderedDay.InRange(course.StartDate, course.EndDate.AddDays(1)))
+                {
+                    if (course.InstructorId == User.Identity.GetUserId())
+                    {
+                        <details>
+                            <ul id="@day-unique">
+                                <li>
+                                    <a href="" style="text-decoration: none; color: darkred; font-weight: 600; text-wrap: normal">
+                                        @course.Name
+                                    </a>
+                                </li>
+                            </ul>
+                        </details>
+                    }
+                }
+            }
+        }*@
                 </div>
             }
             <script>

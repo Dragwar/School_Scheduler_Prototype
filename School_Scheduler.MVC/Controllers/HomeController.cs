@@ -21,6 +21,11 @@ namespace School_Scheduler.MVC.Controllers
             Discriminator discriminator = User.Identity.GetUserDiscriminator();
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationUser foundCurrentUser = db.Users.FirstOrDefault(user => user.Id == currentUserId);
+            if (foundCurrentUser == null)
+            {
+                ModelState.AddModelError("", "Please Login");
+                return View("Error");
+            }
 
             if (discriminator == Discriminator.Instructor)
             {
