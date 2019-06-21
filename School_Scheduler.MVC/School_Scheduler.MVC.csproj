@@ -2195,12 +2195,15 @@
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\SchoolProgram\Details.cshtml" />
+    <Content Include="Views\SchoolProgram\Index.cshtml" />
+    <Content Include="Views\SchoolProgram\Create.cshtml" />
+    <Content Include="Views\SchoolProgram\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ClassRoom\" />
     <Folder Include="Views\Instructor\" />
-    <Folder Include="Views\SchoolProgram\" />
     <Folder Include="Views\Student\" />
   </ItemGroup>
   <ItemGroup>

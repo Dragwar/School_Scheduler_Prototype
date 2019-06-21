@@ -1,0 +1,246 @@
+﻿
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Details";
+    var foundSchoolProgram = ViewBag.SchoolProgram as SchoolProgram;
+    var userId = User.Identity.GetUserId();
+}
+
+@section Styles
+{
+    <style type="text/css">
+        label {
+            margin-bottom: 0px;
+        }
+
+        .myLink {
+            color: #5e72e4;
+        }
+
+            .myLink:hover {
+                color: #233dd2;
+            }
+    </style>
+}
+
+@section Box
+{
+    @{
+        #region MyRegion
+        @*
+            <div class="row container-fluid">
+
+                <div class="card card-stats mb-4 mb-xl-5" style="margin-right: 25px;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">Users</h5>
+                                Enrolled Student(s): <span class="h3 font-weight-bold mb-0">@foundSchoolProgram.EnrolledStudents.Count </span>
+
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-0 text-muted text-sm">
+                            <span class="font-weight-600">Instructor: </span>
+                            <span class="h4 font-weight-bold mb-0">@foundSchoolProgram.Name</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card card-stats mb-4 mb-xl-5">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">Class Room</h5>
+                                Room: <span class="h2 font-weight-bold mb-0">@foundSchoolProgram</span>
+
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                    <i class="fas fa-map-pin"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-0 text-muted text-sm">
+                            <span class="font-weight-600">Room Name: </span>
+                            <span class="h4 font-weight-bold mb-0">@foundSchoolProgram</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        *@
+        #endregion
+    }
+
+}
+<div class="row">
+    <div class="col-xl-6 mb-5 mb-xl-5">
+        <div class="card bg-gradient-default shadow">
+
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="text-uppercase text-light ls-1 mb-1">Details</h4>
+                        <h2 class="text-white mb-0"></h2>
+                    </div>
+
+                    <div class="col"></div>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+
+                <div class="card-group">
+                    <label class="form-control-label  text-muted"><i class="ni ni-app"></i> School Program Name</label>
+                    <div class="input-group input-group-alternative">
+                        <span class="h3 text-lighter">@foundSchoolProgram.Name</span>
+                    </div>
+                </div>
+
+                @if (foundSchoolProgram.Instructors.Any(i => i.Id == userId))
+                {
+                    <div class="card-group">
+                        @using (Html.BeginForm(nameof(SchoolProgramController.Edit), MiscExt.GetName<SchoolProgramController>(), new { foundSchoolProgram.Id }, FormMethod.Get, new { }))
+                        {
+                            <button type="submit" class="btn btn-outline-warning">Edit</button>
+                        }
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-6 mb-5 mb-xl-5">
+        <div class="card bg-gradient-default shadow">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="text-uppercase text-light ls-1 mb-1">Courses</h4>
+                        <h2 class="text-white mb-0"></h2>
+                    </div>
+
+                    <div class="col"></div>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <label class="form-control-label  text-muted"><i class="ni ni-box-2"></i> Courses</label>
+                @if (foundSchoolProgram.Courses.Any())
+                {
+                    <div class="list-group">
+                        <ul>
+                            @foreach (var course in foundSchoolProgram.Courses)
+                            {
+                                <li class="text-light">
+                                    @if (course.InstructorId == userId || course.EnrolledStudents.Any(student => student.Id == userId))
+                                    {
+                                        <a class="myLink h4 text-uppercase ls-1 mb-1" href="@Url.Action(nameof(CourseController.Details), MiscExt.GetName<CourseController>(), new { course.Id })">
+                                            @course.Name
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">@course.Name</span>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-warning font-weight-600">No courses are currently made for this program</p>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 mb-5 mb-xl-5">
+        <div class="card bg-gradient-default shadow">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="text-uppercase text-light ls-1 mb-1">Students</h4>
+                        <h2 class="text-white mb-0"></h2>
+                    </div>
+
+                    <div class="col"></div>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <label class="form-control-label  text-muted"><i class="ni ni-badge"></i> Enrolled Students</label>
+                @if (foundSchoolProgram.EnrolledStudents.Any())
+                {
+                    <div class="list-group">
+                        <ul>
+                            @foreach (var student in foundSchoolProgram.EnrolledStudents)
+                            {
+                                <li class="text-light">
+                                    @student.Name
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-warning font-weight-600">No students are currently enrolled for this program</p>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 mb-5 mb-xl-5">
+        <div class="card bg-gradient-default shadow">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="text-uppercase text-light ls-1 mb-1">Instructors</h4>
+                        <h2 class="text-white mb-0"></h2>
+                    </div>
+
+                    <div class="col"></div>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <label class="form-control-label  text-muted"><i class="ni ni-badge"></i> Instructors</label>
+                @if (foundSchoolProgram.Instructors.Any())
+                {
+                    <div class="list-group">
+                        <ul>
+                            @foreach (var instructor in foundSchoolProgram.Instructors)
+                            {
+                                <li class="text-light">
+                                    @instructor.Name
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-warning font-weight-600">No students are currently enrolled for this program</p>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@Html.Partial("_Footer")

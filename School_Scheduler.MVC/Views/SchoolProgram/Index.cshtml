@@ -1,0 +1,76 @@
+﻿
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Index";
+    var foundSchoolPrograms = ViewBag.SchoolPrograms as List<SchoolProgram>;
+    var userId = User.Identity.GetUserId();
+}
+
+@section Styles
+{
+    <style type="text/css">
+        .myLink {
+            color: #5e72e4;
+        }
+
+            .myLink:hover {
+                color: #233dd2;
+            }
+    </style>
+}
+
+<div class="row">
+
+    @foreach (var sp in foundSchoolPrograms)
+    {
+        <div class="col-md-6 mb-5 mb-xl-5">
+            <div class="card bg-gradient-default">
+
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <h2 class="text-uppercase text-white ls-1 mb-1">
+                                <a href="@Url.Action(nameof(SchoolProgramController.Details), MiscExt.GetName<SchoolProgramController>(), new { sp.Id })">
+                                    @sp.Name
+                                </a>
+                            </h2>
+                            <h5 class="text-light mb-0">School Program</h5>
+                        </div>
+
+                        <div class="col"></div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="card-group">
+                        <label class="form-control-label text-muted"><i class="ni ni-badge"></i> Instructor Count</label>
+                        <div class="input-group input-group-alternative">
+                            <span class="h3 text-lighter">@sp.Instructors.Count</span>
+                        </div>
+                    </div>
+
+                    <div class="card-group">
+                        <label class="form-control-label text-muted"><i class="ni ni-box-2"></i> Course Count</label>
+                        <div class="input-group input-group-alternative">
+                            <span class="h3 text-lighter">@sp.Courses.Count</span>
+                        </div>
+                    </div>
+
+                    <div class="card-group">
+                        <label class="form-control-label text-muted"><i class="ni ni-badge"></i> Enrolled Students Count</label>
+                        <div class="input-group input-group-alternative">
+                            <span class="h3 text-lighter">@sp.EnrolledStudents.Count</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+
+
+</div>
