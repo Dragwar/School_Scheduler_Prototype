@@ -70,9 +70,9 @@ namespace School_Scheduler.MVC.Controllers
                         }
                     }
                 };
-                if (viewModel != null)
+                if (model != null)
                 {
-                    viewModel.Today = viewModel.Today;
+                    viewModel.Today = model.Today;
                 }
                 return View("IndexForStudent", viewModel);
             }
@@ -164,7 +164,8 @@ namespace School_Scheduler.MVC.Controllers
                     StartDate = r.StartDate,
                     EndDate = r.EndDate,
                     Name = r.Name,
-                    InstructorId = r.InstructorId
+                    InstructorId = r.InstructorId,
+                    EnrolledStudents = r.EnrolledStudents.Select(s => new StudentViewModel(s))
                 }).ToList();
                 if (courses != null)
                 {
